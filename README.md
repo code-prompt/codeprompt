@@ -1,36 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Code Prompt Website
 
-## Getting Started
+Production-ready Next.js company website for **Code Prompt** with:
 
-First, run the development server:
+- Multi-page marketing site (`/`, `/services`, `/projects`, `/faq`, `/contact`)
+- MDX-powered blog (`/blog`, `/blog/[slug]`)
+- AI blog automation (API + Telegram webhook)
+- Framer Motion reveal animations
+- Lucide icon system
+- PostgreSQL helper for automation metadata
+
+## Stack
+
+- Next.js 16 (App Router)
+- TypeScript
+- Tailwind CSS v4
+- Framer Motion
+- Lucide React
+- gray-matter + next-mdx-remote
+- pg
+
+## Run
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Build checks
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint
+npm run build
+```
 
-## Learn More
+## Environment variables
 
-To learn more about Next.js, take a look at the following resources:
+Copy `.env.example` to `.env` and set values:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `GEMINI_API_KEY`
+- `TRENDING_RSS_URL`
+- `GEMINI_MODEL`
+- `BLOG_OUTPUT_PATH`
+- `DATABASE_URL`
+- `CRON_SECRET`
+- `TELEGRAM_BOT_TOKEN`
+- `TELEGRAM_CHAT_ID`
+- `TELEGRAM_WEBHOOK_SECRET`
+- `NEXT_PUBLIC_SITE_URL`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Blog behavior
 
-## Deploy on Vercel
+- If no MDX file exists in `content/blog`, `/blog` shows: `There is no published blogs.`
+- New blog posts are created by backend automation into `content/blog/*.mdx`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Automation endpoints
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `POST /api/automation/generate-post`
+- `GET /api/automation/generate-post?topic=Your+Topic`
+- `POST /api/telegram/webhook`
+
+`/api/automation/generate-post` requires `Authorization: Bearer <CRON_SECRET>` when `CRON_SECRET` is set.
+
+## Try automation manually
+
+```bash
+curl -X POST "http://localhost:3000/api/automation/generate-post" \
+  -H "Authorization: Bearer <CRON_SECRET>" \
+  -H "Content-Type: application/json" \
+  -d '{"topic":"How to build AI SaaS in 2026"}'
+```
+
+## Telegram setup
+
+Set webhook with secret token:
+
+```bash
+curl -X POST "https://api.telegram.org/bot<TELEGRAM_BOT_TOKEN>/setWebhook" \
+  -d "url=https://<your-domain>/api/telegram/webhook" \
+  -d "secret_token=<TELEGRAM_WEBHOOK_SECRET>"
+```
+
+Then send to your bot:
+
+```text
+/blog How to build a startup MVP for fintech
+```
+
+The bot will generate, publish, and reply with the blog URL.

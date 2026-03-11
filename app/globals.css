@@ -1,26 +1,177 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f6f7f8;
+  --surface: #ffffff;
+  --foreground: #0f172a;
+  --muted: #475569;
+  --brand: #3182ed;
+  --brand-dark: #1d4ed8;
+  --brand-foreground: #ffffff;
+  --primary: var(--brand);
+  --primary-foreground: var(--brand-foreground);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-surface: var(--surface);
+  --color-brand: var(--brand);
+  --color-brand-dark: var(--brand-dark);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --font-sans: var(--font-body);
+  --font-heading: var(--font-heading);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  background: var(--background);
+  min-height: 100vh;
+  background:
+    radial-gradient(1200px 600px at 90% -10%, rgba(49, 130, 237, 0.18), transparent 60%),
+    radial-gradient(800px 400px at 0% -20%, rgba(59, 130, 246, 0.12), transparent 60%),
+    var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body), sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading), sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: rgba(49, 130, 237, 0.2);
+  color: #0f172a;
+}
+
+.prose {
+  max-width: none;
+  color: #1e293b;
+}
+
+.prose h1,
+.prose h2,
+.prose h3 {
+  margin-top: 1.5em;
+  margin-bottom: 0.6em;
+  color: #0f172a;
+}
+
+.prose p,
+.prose li {
+  line-height: 1.8;
+  color: #334155;
+}
+
+.prose a {
+  color: var(--brand);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.3rem;
+}
+
+.prose code {
+  border-radius: 6px;
+  background: #e2e8f0;
+  padding: 0.15rem 0.4rem;
+  color: #0f172a;
+}
+
+.btn-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.btn-base:focus-visible {
+  outline: 2px solid rgba(49, 130, 237, 0.38);
+  outline-offset: 2px;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  box-shadow: 0 14px 24px -16px rgba(49, 130, 237, 0.95);
+}
+
+.btn-primary:hover {
+  background: var(--brand-dark);
+  color: var(--primary-foreground);
+}
+
+.btn-secondary {
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #0f172a;
+}
+
+.btn-secondary:hover {
+  border-color: #94a3b8;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.btn-inverse {
+  background: #ffffff;
+  color: var(--brand);
+}
+
+.btn-inverse:hover {
+  background: #f8fafc;
+  color: var(--brand-dark);
+}
+
+.btn-outline-light {
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.btn-outline-light:hover {
+  background: #ffffff;
+  color: var(--brand);
+}
+
+.btn-dark {
+  background: #0f172a;
+  color: #ffffff;
+}
+
+.btn-dark:hover {
+  background: #1e293b;
+  color: #ffffff;
 }
