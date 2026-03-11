@@ -13,6 +13,13 @@ type GeminiResponse = {
   }>;
 };
 
+type ParsedStructuredDraft = {
+  title?: string;
+  description?: string;
+  tags?: string[];
+  contentMarkdown?: string;
+};
+
 function extractJsonBlock(text: string): string {
   const fenced = text.match(/```json\s*([\s\S]*?)```/i);
   if (fenced?.[1]) return fenced[1].trim();
@@ -27,11 +34,54 @@ function extractJsonBlock(text: string): string {
 }
 
 function normalizeTags(value: unknown): string[] {
-  if (!Array.isArray(value)) return [];
-  return value
-    .map((item) => String(item).trim().toLowerCase())
-    .filter(Boolean)
-    .slice(0, 6);
+  if (Array.isArray(value)) {
+    return value
+      .map((item) => String(item).trim().toLowerCase())
+      .filter(Boolean)
+      .slice(0, 6);
+  }
+
+  if (typeof value === "string") {
+    return value
+      .split(",")
+      .map((item) => item.trim().toLowerCase())
+      .filter(Boolean)
+      .slice(0, 6);
+  }
+
+  return [];
+}
+
+function parseStructuredDraft(text: string): ParsedStructuredDraft {
+  const title = text.match(/(?:^|\n)TITLE:\s*(.+)/i)?.[1]?.trim();
+  const description = text.match(/(?:^|\n)DESCRIPTION:\s*(.+)/i)?.[1]?.trim();
+  const tagsLine = text.match(/(?:^|\n)TAGS:\s*(.+)/i)?.[1]?.trim();
+
+  const contentMatch =
+    text.match(/---CONTENT_START---\s*([\s\S]*?)\s*---CONTENT_END---/i) ??
+    text.match(/(?:^|\n)CONTENT_MARKDOWN:\s*([\s\S]*)$/i);
+
+  const contentMarkdown = contentMatch?.[1]?.trim();
+
+  return {
+    title,
+    description,
+    tags: tagsLine
+      ? tagsLine
+          .split(",")
+          .map((item) => item.trim())
+          .filter(Boolean)
+      : undefined,
+    contentMarkdown,
+  };
+}
+
+function parseAiResponse(rawText: string): ParsedStructuredDraft {
+  try {
+    return JSON.parse(extractJsonBlock(rawText)) as Partial<AiDraft>;
+  } catch {
+    return parseStructuredDraft(rawText);
+  }
 }
 
 function validateDraft(draft: Partial<AiDraft>, topic: string): AiDraft {
@@ -71,22 +121,22 @@ You are writing a production-ready blog post for Code Prompt, a startup-focused 
 Primary topic: "${params.topic}"
 ${trendingLine}
 
-Return ONLY valid JSON with this schema:
-{
-  "title": "string",
-  "description": "string up to 170 chars",
-  "tags": ["string", "string", "string"],
-  "contentMarkdown": "full markdown article"
-}
+Return the response in EXACTLY this plain-text format:
+TITLE: <string>
+DESCRIPTION: <string up to 170 chars>
+TAGS: <comma separated tags>
+---CONTENT_START---
+<full markdown article>
+---CONTENT_END---
 
-Rules for contentMarkdown:
+Rules for article markdown:
 - 1400 to 2200 words.
 - SEO-focused and helpful.
 - Use H2 and H3 headings.
 - Include practical examples.
 - Include one FAQ section.
 - Include a conclusion.
-- Do not include markdown code fences around the JSON.
+- Do not include any extra notes before TITLE or after CONTENT_END.
 `.trim();
 
   const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
@@ -120,6 +170,12 @@ Rules for contentMarkdown:
     throw new Error("Gemini returned an empty response.");
   }
 
-  const parsed = JSON.parse(extractJsonBlock(rawText)) as Partial<AiDraft>;
+  const parsed = parseAiResponse(rawText) as Partial<AiDraft>;
+  if (!parsed.contentMarkdown) {
+    throw new Error(
+      `AI response format invalid. Please retry. Raw preview: ${rawText.slice(0, 320)}`,
+    );
+  }
+
   return validateDraft(parsed, params.topic);
 }
