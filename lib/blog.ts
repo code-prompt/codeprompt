@@ -1,6 +1,9 @@
 import fs from "node:fs";
 import path from "node:path";
+
 import matter from "gray-matter";
+
+import { getAllStoredBlogPosts, getStoredBlogPostBySlug } from "@/lib/db";
 
 const BLOG_DIR = path.join(process.cwd(), "content", "blog");
 
@@ -39,7 +42,7 @@ function readMdxFile(fileName: string): BlogPost {
   return { meta, content };
 }
 
-export function getAllPosts(): BlogPostMeta[] {
+function getAllPostsFromFs(): BlogPostMeta[] {
   if (!fs.existsSync(BLOG_DIR)) return [];
 
   return fs
@@ -50,8 +53,49 @@ export function getAllPosts(): BlogPostMeta[] {
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
-export function getPostBySlug(slug: string): BlogPost | null {
+function getPostBySlugFromFs(slug: string): BlogPost | null {
   const filePath = path.join(BLOG_DIR, `${slug}.mdx`);
   if (!fs.existsSync(filePath)) return null;
   return readMdxFile(`${slug}.mdx`);
+}
+
+export async function getAllPosts(): Promise<BlogPostMeta[]> {
+  const hasDatabase = Boolean(process.env.DATABASE_URL);
+
+  if (hasDatabase) {
+    const dbPosts = await getAllStoredBlogPosts();
+    return dbPosts.map((post) => ({
+      slug: post.slug,
+      title: post.title,
+      date: post.published_at.slice(0, 10),
+      description: post.description,
+      tags: post.tags,
+      image: post.image ?? undefined,
+    }));
+  }
+
+  return getAllPostsFromFs();
+}
+
+export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
+  const hasDatabase = Boolean(process.env.DATABASE_URL);
+
+  if (hasDatabase) {
+    const post = await getStoredBlogPostBySlug(slug);
+    if (!post) return null;
+
+    return {
+      meta: {
+        slug: post.slug,
+        title: post.title,
+        date: post.published_at.slice(0, 10),
+        description: post.description,
+        tags: post.tags,
+        image: post.image ?? undefined,
+      },
+      content: post.content_markdown,
+    };
+  }
+
+  return getPostBySlugFromFs(slug);
 }

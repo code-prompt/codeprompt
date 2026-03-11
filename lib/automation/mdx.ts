@@ -1,6 +1,8 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
+import { createStoredBlogPost } from "@/lib/db";
+
 import type { AiDraft } from "./gemini";
 
 export type PublishedPost = {
@@ -57,11 +59,43 @@ async function getUniqueSlug(directory: string, base: string): Promise<string> {
   }
 }
 
-export async function publishMdxPost(draft: AiDraft): Promise<PublishedPost> {
+async function publishToDatabase(draft: AiDraft, baseSlug: string): Promise<PublishedPost> {
+  const safeTags = draft.tags.length ? draft.tags : ["software development services", "startup"];
+
+  for (let counter = 1; counter <= 100; counter += 1) {
+    const slug = counter === 1 ? baseSlug : `${baseSlug}-${counter}`;
+    const result = await createStoredBlogPost({
+      slug,
+      title: draft.title,
+      description: draft.description,
+      tags: safeTags,
+      contentMarkdown: draft.contentMarkdown.trim(),
+      source: "automation",
+      publishedAt: new Date(),
+    });
+
+    if (result === "created") {
+      return {
+        slug,
+        filePath: `db://ai_blog_posts/${slug}`,
+        title: draft.title,
+      };
+    }
+
+    if (result === "error") {
+      throw new Error(
+        "Failed to save blog post to database. Check DATABASE_URL and database permissions.",
+      );
+    }
+  }
+
+  throw new Error("Could not generate a unique blog slug after multiple attempts.");
+}
+
+async function publishToFilesystem(draft: AiDraft, baseSlug: string): Promise<PublishedPost> {
   const directory = resolveBlogDir();
   await fs.mkdir(directory, { recursive: true });
 
-  const baseSlug = slugify(draft.title) || `blog-${Date.now()}`;
   const slug = await getUniqueSlug(directory, baseSlug);
   const filePath = path.join(directory, `${slug}.mdx`);
 
@@ -85,4 +119,14 @@ export async function publishMdxPost(draft: AiDraft): Promise<PublishedPost> {
     filePath,
     title: draft.title,
   };
+}
+
+export async function publishMdxPost(draft: AiDraft): Promise<PublishedPost> {
+  const baseSlug = slugify(draft.title) || `blog-${Date.now()}`;
+
+  if (process.env.DATABASE_URL) {
+    return publishToDatabase(draft, baseSlug);
+  }
+
+  return publishToFilesystem(draft, baseSlug);
 }

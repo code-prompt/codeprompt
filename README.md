@@ -53,13 +53,15 @@ Copy `.env.example` to `.env` and set values:
 ## Blog behavior
 
 - If no MDX file exists in `content/blog`, `/blog` shows: `There is no published blogs.`
-- New blog posts are created by backend automation into `content/blog/*.mdx`.
+- In local development without `DATABASE_URL`, new posts are written to `content/blog/*.mdx`.
+- In serverless production (for example Vercel), blogs are stored in PostgreSQL via `DATABASE_URL`.
 
 ## Automation endpoints
 
 - `POST /api/automation/generate-post`
 - `GET /api/automation/generate-post?topic=Your+Topic`
 - `POST /api/telegram/webhook`
+- `POST /api/contact/submit`
 
 `/api/automation/generate-post` requires `Authorization: Bearer <CRON_SECRET>` when `CRON_SECRET` is set.
 
@@ -86,6 +88,10 @@ Then send to your bot:
 
 ```text
 /blog How to build a startup MVP for fintech
+/forms
+/forms 2
 ```
 
 The bot will generate, publish, and reply with the blog URL.
+`/forms` returns paginated contact submissions (5 entries per page).
+Only `TELEGRAM_CHAT_ID` chat is allowed to run `/blog` and `/forms`.

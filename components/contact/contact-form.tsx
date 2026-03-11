@@ -13,6 +13,7 @@ type ContactFormValues = {
 
 export function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const {
     register,
@@ -29,8 +30,22 @@ export function ContactForm() {
   });
 
   const onSubmit = async (values: ContactFormValues) => {
-    void values;
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    setSubmitError(null);
+    setSubmitted(false);
+
+    const response = await fetch("/api/contact/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+
+    if (!response.ok) {
+      const payload = (await response.json().catch(() => ({}))) as { error?: string };
+      throw new Error(payload.error ?? "Failed to submit form.");
+    }
+
     setSubmitted(true);
     reset();
   };
@@ -54,7 +69,18 @@ export function ContactForm() {
         </div>
       ) : null}
 
-      <form className="mt-8 space-y-5" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className="mt-8 space-y-5"
+        onSubmit={handleSubmit(async (values) => {
+          try {
+            await onSubmit(values);
+          } catch (error) {
+            const message = error instanceof Error ? error.message : "Failed to submit form.";
+            setSubmitted(false);
+            setSubmitError(message);
+          }
+        })}
+      >
         <div>
           <label className="text-sm font-semibold text-slate-800" htmlFor="name">
             Name
@@ -125,6 +151,7 @@ export function ContactForm() {
         >
           {isSubmitting ? "Sending..." : "Send Project Brief"}
         </button>
+        {submitError ? <p className="text-center text-xs text-red-600">{submitError}</p> : null}
       </form>
     </div>
   );

@@ -44,3 +44,29 @@ export async function sendTelegramMessage(chatId: number, text: string): Promise
     }),
   });
 }
+
+export function parseFormsPageFromText(text?: string): number | null {
+  if (!text) return null;
+
+  const normalized = text.trim();
+  const match = normalized.match(/^\/forms(?:@[a-zA-Z0-9_]+)?(?:\s+(\d+))?\s*$/i);
+  if (!match) return null;
+
+  const pageText = match[1];
+  if (!pageText) return 1;
+
+  const page = Number(pageText);
+  if (!Number.isFinite(page) || page < 1) return 1;
+
+  return Math.floor(page);
+}
+
+export function getOwnerChatId(): number | null {
+  const raw = process.env.TELEGRAM_CHAT_ID?.trim();
+  if (!raw) return null;
+
+  const parsed = Number(raw);
+  if (!Number.isFinite(parsed)) return null;
+
+  return Math.trunc(parsed);
+}
