@@ -2,6 +2,7 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { blogMdxComponents } from "@/components/blog/mdx-components";
 import { Container } from "@/components/ui/container";
 import { getPostBySlug } from "@/lib/blog";
 
@@ -60,8 +61,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </p>
         </header>
 
-        <article className="prose mt-8 rounded-2xl border border-slate-200 bg-white p-5 sm:mt-10 sm:p-6 md:p-10">
-          <MDXRemote source={post.content} />
+        <article className="prose mdx-content mt-8 rounded-2xl border border-slate-200 bg-white p-5 sm:mt-10 sm:p-6 md:p-10">
+          <MDXRemote source={post.content} components={blogMdxComponents} />
         </article>
       </Container>
     </main>
