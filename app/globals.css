@@ -48,6 +48,7 @@ body {
   color: var(--foreground);
   font-family: var(--font-body), sans-serif;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
   overflow-x: clip;
 }
 
@@ -309,6 +310,25 @@ canvas {
   filter: blur(14px);
   opacity: 0.9;
   animation: mesh-shift 14s ease-in-out infinite;
+}
+
+@media (max-width: 767px) {
+  .bg-mesh-motion {
+    inset: -4% -2% auto -2%;
+    height: 76%;
+    filter: blur(8px);
+    opacity: 0.55;
+  }
+
+  .anim-float-slow,
+  .anim-float-medium {
+    animation-duration: 10s;
+  }
+
+  .anim-pulse-soft {
+    animation-duration: 7.2s;
+    opacity: 0.55;
+  }
 }
 
 .fx-card {

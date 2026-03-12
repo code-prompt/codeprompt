@@ -32,13 +32,13 @@ export default function Home() {
       <section className="relative overflow-hidden pb-16 pt-12 md:pb-24 md:pt-20 lg:pb-32 lg:pt-24">
         <div className="pointer-events-none absolute inset-0">
           <div className="bg-mesh-motion" />
-          <Parallax speed={180} xSpeed={120} rotate={14} fade className="absolute -right-32 -top-32">
-            <div className="anim-float-slow h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(59,130,246,0.34)_0%,rgba(59,130,246,0.06)_45%,transparent_72%)] blur-2xl" />
+          <Parallax speed={180} xSpeed={120} rotate={14} fade className="absolute -right-14 -top-14 sm:-right-32 sm:-top-32">
+            <div className="anim-float-slow h-36 w-36 rounded-full bg-[radial-gradient(circle,rgba(59,130,246,0.34)_0%,rgba(59,130,246,0.06)_45%,transparent_72%)] blur-2xl sm:h-72 sm:w-72" />
           </Parallax>
-          <Parallax speed={-160} xSpeed={-92} rotate={-12} fade className="absolute -left-24 top-24">
-            <div className="anim-pulse-soft h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(14,165,233,0.25)_0%,rgba(14,165,233,0.06)_50%,transparent_74%)] blur-3xl" />
+          <Parallax speed={-160} xSpeed={-92} rotate={-12} fade className="absolute -left-10 top-24 sm:-left-24">
+            <div className="anim-pulse-soft h-28 w-28 rounded-full bg-[radial-gradient(circle,rgba(14,165,233,0.25)_0%,rgba(14,165,233,0.06)_50%,transparent_74%)] blur-3xl sm:h-64 sm:w-64" />
           </Parallax>
-          <Parallax speed={128} xSpeed={160} rotate={20} scale={0.08} className="absolute bottom-4 right-[20%]">
+          <Parallax speed={128} xSpeed={160} rotate={20} scale={0.08} className="absolute bottom-4 right-[12%] hidden sm:block sm:right-[20%]">
             <div className="anim-float-medium anim-delay-1 h-28 w-28 rounded-full border border-brand/25 bg-brand/10 backdrop-blur-sm" />
           </Parallax>
         </div>
