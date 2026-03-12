@@ -11,6 +11,14 @@ export const metadata: Metadata = {
   title: "Projects",
   description:
     "Featured startup projects from Code Prompt across fintech, social tech, SaaS, and healthtech domains.",
+  alternates: { canonical: "/projects" },
+  openGraph: {
+    url: "/projects",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export default function ProjectsPage() {

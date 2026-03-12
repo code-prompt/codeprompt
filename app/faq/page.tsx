@@ -11,6 +11,14 @@ export const metadata: Metadata = {
   title: "FAQ",
   description:
     "Answers to common questions about our MVP development company and SaaS engineering process.",
+  alternates: { canonical: "/faq" },
+  openGraph: {
+    url: "/faq",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export default function FaqPage() {

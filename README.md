@@ -64,6 +64,8 @@ Copy `.env.example` to `.env` and set values:
 - `GET /api/automation/generate-post?topic=Your+Topic`
 - `POST /api/telegram/webhook`
 - `POST /api/contact/submit`
+- `GET /robots.txt`
+- `GET /sitemap.xml`
 
 `/api/automation/generate-post` requires `Authorization: Bearer <CRON_SECRET>` when `CRON_SECRET` is set.
 

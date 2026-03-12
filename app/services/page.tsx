@@ -12,6 +12,14 @@ export const metadata: Metadata = {
   title: "Services",
   description:
     "Software development services for startups: MVP launch, SaaS development, AI product engineering, and dedicated tech teams.",
+  alternates: { canonical: "/services" },
+  openGraph: {
+    url: "/services",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export default function ServicesPage() {

@@ -1,4 +1,5 @@
 import { ArrowRight, Check, CirclePlay } from "lucide-react";
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { Container } from "@/components/ui/container";
@@ -14,6 +15,13 @@ import {
   services,
   socialProofStats,
 } from "@/lib/site-data";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+  openGraph: {
+    url: "/",
+  },
+};
 
 export default function Home() {
   const featuredServices = services.slice(0, 3);

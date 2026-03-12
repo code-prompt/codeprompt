@@ -10,6 +10,14 @@ export const metadata: Metadata = {
   title: "Contact",
   description:
     "Contact Code Prompt to discuss MVP development, SaaS architecture, and startup product engineering.",
+  alternates: { canonical: "/contact" },
+  openGraph: {
+    url: "/contact",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export default function ContactPage() {

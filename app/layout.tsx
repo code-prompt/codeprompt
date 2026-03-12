@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Manrope, Space_Grotesk } from "next/font/google";
 
 import { Footer } from "@/components/site/footer";
+import { getSiteUrl } from "@/lib/seo";
 import { Header } from "@/components/site/header";
 import { seoKeywords } from "@/lib/site-data";
 
@@ -17,8 +18,10 @@ const bodyFont = Manrope({
   subsets: ["latin"],
 });
 
+const siteUrl = getSiteUrl();
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://codeprompt.in"),
+  metadataBase: new URL(siteUrl),
   title: {
     default: "Code Prompt | Software Development Services for Startups",
     template: "%s | Code Prompt",
@@ -26,19 +29,39 @@ export const metadata: Metadata = {
   description:
     "Code Prompt is a startup-focused software development studio helping founders launch MVPs, scale SaaS products, and hire senior engineers.",
   keywords: seoKeywords,
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   openGraph: {
     title: "Code Prompt",
     description:
       "Build your software faster with expert developers. MVP launch, SaaS engineering, and startup tech teams.",
     type: "website",
     siteName: "Code Prompt",
-    url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://codeprompt.in",
+    url: siteUrl,
+    images: [
+      {
+        url: "/logo.png",
+        width: 512,
+        height: 512,
+        alt: "Code Prompt",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Code Prompt",
     description:
       "MVP development company and SaaS development agency for ambitious startups.",
+    images: ["/logo.png"],
   },
   icons: {
     icon: [
@@ -63,9 +86,23 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Code Prompt",
+    url: siteUrl,
+    logo: `${siteUrl}/logo.png`,
+  };
+
   return (
     <html lang="en">
       <body className={`${headingFont.variable} ${bodyFont.variable}`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationSchema).replace(/</g, "\\u003c"),
+          }}
+        />
         <Header />
         {children}
         <Footer />

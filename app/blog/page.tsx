@@ -11,6 +11,14 @@ export const metadata: Metadata = {
   title: "Blog",
   description:
     "Insights on software development services, startup engineering, MVP delivery, and SaaS architecture.",
+  alternates: { canonical: "/blog" },
+  openGraph: {
+    url: "/blog",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export const dynamic = "force-dynamic";
