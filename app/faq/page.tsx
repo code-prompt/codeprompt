@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { Container } from "@/components/ui/container";
 import { FaqAccordion } from "@/components/ui/faq-accordion";
+import { PageAtmosphere } from "@/components/ui/page-atmosphere";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { faqItems } from "@/lib/site-data";
@@ -14,8 +15,10 @@ export const metadata: Metadata = {
 
 export default function FaqPage() {
   return (
-    <main className="pb-14 pt-12 md:pb-16 md:pt-20">
-      <Container className="max-w-4xl">
+    <main className="relative overflow-hidden pb-14 pt-12 md:pb-16 md:pt-20">
+      <PageAtmosphere />
+
+      <Container className="relative z-10 max-w-4xl">
         <Reveal>
           <SectionHeading
             eyebrow="FAQ"

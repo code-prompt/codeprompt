@@ -19,7 +19,7 @@ export function FaqAccordion({ items }: FaqAccordionProps) {
         return (
           <div
             key={item.question}
-            className="rounded-2xl border border-slate-200 bg-white/90 shadow-[0_10px_30px_-25px_rgba(15,23,42,0.5)]"
+            className="fx-card rounded-2xl border border-slate-200 bg-white/90 shadow-[0_10px_30px_-25px_rgba(15,23,42,0.5)]"
           >
             <button
               type="button"

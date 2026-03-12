@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { Container } from "@/components/ui/container";
+import { PageAtmosphere } from "@/components/ui/page-atmosphere";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { getAllPosts } from "@/lib/blog";
@@ -19,8 +20,10 @@ export default async function BlogPage() {
   const hasPosts = posts.length > 0;
 
   return (
-    <main className="pb-14 pt-12 md:pb-16 md:pt-20">
-      <Container>
+    <main className="relative overflow-hidden pb-14 pt-12 md:pb-16 md:pt-20">
+      <PageAtmosphere />
+
+      <Container className="relative z-10">
         <Reveal>
           <SectionHeading
             eyebrow="Blog"
@@ -33,7 +36,7 @@ export default async function BlogPage() {
           <div className="mt-10 grid gap-5 md:mt-12 md:gap-6 lg:grid-cols-2">
             {posts.map((post, index) => (
               <Reveal key={post.slug} delay={index * 0.07}>
-                <article className="h-full rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_20px_50px_-40px_rgba(15,23,42,0.5)] sm:p-6 md:p-7">
+                <article className="fx-card h-full rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_20px_50px_-40px_rgba(15,23,42,0.5)] sm:p-6 md:p-7">
                   <div className="flex flex-wrap items-center gap-2">
                     {post.tags.map((tag) => (
                       <span
@@ -66,7 +69,7 @@ export default async function BlogPage() {
           </div>
         ) : (
           <Reveal delay={0.04}>
-            <div className="mt-10 rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-[0_20px_50px_-40px_rgba(15,23,42,0.5)] sm:mt-12 sm:p-10">
+            <div className="fx-card mt-10 rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-[0_20px_50px_-40px_rgba(15,23,42,0.5)] sm:mt-12 sm:p-10">
               <p className="text-lg font-semibold text-slate-900">There is no published blogs.</p>
               <p className="mt-2 text-sm text-slate-600">
                 Blogs will appear here after they are published from the backend automation.

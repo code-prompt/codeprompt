@@ -10,6 +10,7 @@ import { useState } from "react";
 import { navLinks } from "@/lib/site-data";
 
 import { Container } from "../ui/container";
+import { ScrollProgress } from "../ui/scroll-progress";
 
 function BrandMark() {
   return (
@@ -24,7 +25,8 @@ export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-brand/10 bg-[#f6f7f8]/85 backdrop-blur-md">
+    <header className="relative sticky top-0 z-40 border-b border-brand/10 bg-[#f6f7f8]/85 backdrop-blur-md">
+      <ScrollProgress />
       <Container className="py-3 sm:py-4">
         <div className="flex items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-3" onClick={() => setMenuOpen(false)}>

@@ -51,7 +51,7 @@ export function ContactForm() {
   };
 
   return (
-    <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-[0_30px_80px_-40px_rgba(15,23,42,0.45)] md:p-8">
+    <div className="fx-card rounded-3xl border border-slate-200 bg-white p-6 shadow-[0_30px_80px_-40px_rgba(15,23,42,0.45)] md:p-8">
       <h2 className="text-xl font-bold text-slate-900 sm:text-2xl">Book a Free Discovery Call</h2>
       <p className="mt-2 text-sm leading-7 text-slate-600">
         Share your product goals and we will send a practical execution plan.

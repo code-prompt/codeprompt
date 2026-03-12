@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 
 import { blogMdxComponents } from "@/components/blog/mdx-components";
 import { Container } from "@/components/ui/container";
+import { PageAtmosphere } from "@/components/ui/page-atmosphere";
 import { getPostBySlug } from "@/lib/blog";
 
 type BlogPostPageProps = {
@@ -35,9 +36,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   return (
-    <main className="pb-14 pt-12 md:pb-16 md:pt-20">
-      <Container className="max-w-4xl">
-        <header className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 md:p-8">
+    <main className="relative overflow-hidden pb-14 pt-12 md:pb-16 md:pt-20">
+      <PageAtmosphere />
+
+      <Container className="relative z-10 max-w-4xl">
+        <header className="fx-card rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 md:p-8">
           <div className="flex flex-wrap gap-2">
             {post.meta.tags.map((tag) => (
               <span
@@ -61,7 +64,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </p>
         </header>
 
-        <article className="prose mdx-content mt-8 rounded-2xl border border-slate-200 bg-white p-5 sm:mt-10 sm:p-6 md:p-10">
+        <article className="prose mdx-content fx-card mt-8 rounded-2xl border border-slate-200 bg-white p-5 sm:mt-10 sm:p-6 md:p-10">
           <MDXRemote source={post.content} components={blogMdxComponents} />
         </article>
       </Container>

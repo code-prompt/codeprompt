@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { Container } from "@/components/ui/container";
 import { FaqAccordion } from "@/components/ui/faq-accordion";
+import { Parallax } from "@/components/ui/parallax";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
 import {
@@ -21,82 +22,101 @@ export default function Home() {
   return (
     <main>
       <section className="relative overflow-hidden pb-16 pt-12 md:pb-24 md:pt-20 lg:pb-32 lg:pt-24">
-        <Container>
+        <div className="pointer-events-none absolute inset-0">
+          <div className="bg-mesh-motion" />
+          <Parallax speed={180} xSpeed={120} rotate={14} fade className="absolute -right-32 -top-32">
+            <div className="anim-float-slow h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(59,130,246,0.34)_0%,rgba(59,130,246,0.06)_45%,transparent_72%)] blur-2xl" />
+          </Parallax>
+          <Parallax speed={-160} xSpeed={-92} rotate={-12} fade className="absolute -left-24 top-24">
+            <div className="anim-pulse-soft h-64 w-64 rounded-full bg-[radial-gradient(circle,rgba(14,165,233,0.25)_0%,rgba(14,165,233,0.06)_50%,transparent_74%)] blur-3xl" />
+          </Parallax>
+          <Parallax speed={128} xSpeed={160} rotate={20} scale={0.08} className="absolute bottom-4 right-[20%]">
+            <div className="anim-float-medium anim-delay-1 h-28 w-28 rounded-full border border-brand/25 bg-brand/10 backdrop-blur-sm" />
+          </Parallax>
+        </div>
+
+        <Container className="relative z-10">
           <div className="grid items-center gap-8 md:gap-10 lg:grid-cols-2 lg:gap-14">
             <Reveal>
-              <div>
-                <div className="inline-flex items-center gap-2 rounded-full border border-brand/20 bg-brand/10 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.12em] text-brand">
-                  <span className="h-2 w-2 rounded-full bg-brand" />
-                  Now scaling Web3 &amp; AI MVPs
+              <Parallax speed={52} xSpeed={24} rotate={2.5} scale={0.04}>
+                <div>
+                  <div className="anim-float-slow inline-flex items-center gap-2 rounded-full border border-brand/20 bg-brand/10 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.12em] text-brand">
+                    <span className="h-2 w-2 rounded-full bg-brand" />
+                    Now scaling Web3 &amp; AI MVPs
+                  </div>
+
+                  <h1 className="mt-6 text-balance text-4xl font-bold leading-[1.03] tracking-tight text-slate-900 sm:text-5xl md:text-6xl lg:text-7xl">
+                    Build Your Software <span className="text-brand">Faster</span> With Expert
+                    Developers
+                  </h1>
+
+                  <p className="mt-6 max-w-xl text-pretty text-base leading-7 text-slate-600 md:mt-7 md:text-lg md:leading-8">
+                    We help startups launch MVPs, build scalable products, and provide dedicated
+                    tech teams. From concept to code, we are your engineering partner.
+                  </p>
+
+                  <div className="mt-8 flex flex-wrap items-center gap-3 sm:gap-4 md:mt-9">
+                    <Link
+                      href="/contact"
+                      className="btn-base btn-primary w-full justify-center gap-2 px-6 py-3 text-sm sm:w-auto sm:px-7 sm:py-4"
+                    >
+                      Start Your Project
+                      <ArrowRight className="h-4 w-4" />
+                    </Link>
+                    <Link
+                      href="/projects"
+                      className="btn-base btn-secondary w-full justify-center gap-2 px-6 py-3 text-sm sm:w-auto sm:px-7 sm:py-4"
+                    >
+                      <CirclePlay className="h-4 w-4" />
+                      View Portfolio
+                    </Link>
+                  </div>
                 </div>
-
-                <h1 className="mt-6 text-balance text-4xl font-bold leading-[1.03] tracking-tight text-slate-900 sm:text-5xl md:text-6xl lg:text-7xl">
-                  Build Your Software <span className="text-brand">Faster</span> With Expert
-                  Developers
-                </h1>
-
-                <p className="mt-6 max-w-xl text-pretty text-base leading-7 text-slate-600 md:mt-7 md:text-lg md:leading-8">
-                  We help startups launch MVPs, build scalable products, and provide dedicated
-                  tech teams. From concept to code, we are your engineering partner.
-                </p>
-
-                <div className="mt-8 flex flex-wrap items-center gap-3 sm:gap-4 md:mt-9">
-                  <Link
-                    href="/contact"
-                    className="btn-base btn-primary w-full justify-center gap-2 px-6 py-3 text-sm sm:w-auto sm:px-7 sm:py-4"
-                  >
-                    Start Your Project
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
-                  <Link
-                    href="/projects"
-                    className="btn-base btn-secondary w-full justify-center gap-2 px-6 py-3 text-sm sm:w-auto sm:px-7 sm:py-4"
-                  >
-                    <CirclePlay className="h-4 w-4" />
-                    View Portfolio
-                  </Link>
-                </div>
-              </div>
+              </Parallax>
             </Reveal>
 
             <Reveal delay={0.12}>
-              <div className="relative rounded-2xl border border-white/20 bg-[linear-gradient(140deg,#101822_0%,#1e293b_100%)] p-4 shadow-[0_28px_90px_-45px_rgba(15,23,42,0.8)] sm:p-5">
-                <div className="rounded-xl border border-white/10 bg-white/5 p-3 sm:p-4">
-                  <div className="mb-4 flex items-center gap-2 border-b border-white/10 pb-3">
-                    <span className="h-3 w-3 rounded-full bg-red-400/80" />
-                    <span className="h-3 w-3 rounded-full bg-yellow-300/80" />
-                    <span className="h-3 w-3 rounded-full bg-emerald-400/80" />
-                    <span className="ml-2 text-[10px] uppercase tracking-[0.16em] text-slate-400">
-                      prompt_service.py
-                    </span>
-                  </div>
+              <Parallax speed={148} xSpeed={-72} rotate={7} scale={0.09}>
+                <div className="relative rounded-2xl border border-white/20 bg-[linear-gradient(140deg,#101822_0%,#1e293b_100%)] p-4 shadow-[0_28px_90px_-45px_rgba(15,23,42,0.8)] sm:p-5">
+                  <div className="rounded-xl border border-white/10 bg-white/5 p-3 sm:p-4">
+                    <div className="mb-4 flex items-center gap-2 border-b border-white/10 pb-3">
+                      <span className="h-3 w-3 rounded-full bg-red-400/80" />
+                      <span className="h-3 w-3 rounded-full bg-yellow-300/80" />
+                      <span className="h-3 w-3 rounded-full bg-emerald-400/80" />
+                      <span className="ml-2 text-[10px] uppercase tracking-[0.16em] text-slate-400">
+                        prompt_service.py
+                      </span>
+                    </div>
 
-                  <pre className="overflow-x-auto text-xs leading-6 text-slate-200 sm:text-sm sm:leading-7">
-                    <code>{`class ProductBuilder:
+                    <pre className="overflow-x-auto text-xs leading-6 text-slate-200 sm:text-sm sm:leading-7">
+                      <code>{`class ProductBuilder:
   def __init__(self, idea):
     self.stack = ["React", "FastAPI", "Postgres"]
     self.engineers = "Senior-Level"
 
   def deploy(self):
     return "🚀 Production Ready"`}</code>
-                  </pre>
+                    </pre>
 
-                  <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-4">
-                    <div className="flex gap-3">
-                      <span className="h-8 w-20 rounded bg-white/10" />
-                      <span className="h-8 w-10 rounded bg-white/10" />
+                    <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-4">
+                      <div className="flex gap-3">
+                        <span className="h-8 w-20 rounded bg-white/10" />
+                        <span className="h-8 w-10 rounded bg-white/10" />
+                      </div>
+                      <span className="text-xs text-brand">Compilation Successful</span>
                     </div>
-                    <span className="text-xs text-brand">Compilation Successful</span>
                   </div>
-                </div>
 
-                <div className="absolute bottom-3 left-3 rounded-xl border border-brand/20 bg-white/80 p-3 shadow-xl backdrop-blur-md sm:-bottom-5 sm:-left-5 sm:p-4">
-                  <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-slate-500">
-                    Speed
-                  </p>
-                  <p className="mt-1 text-base font-bold text-slate-900 sm:text-lg">4.2x Faster</p>
+                  <Parallax speed={-120} xSpeed={90} rotate={-14} scale={0.07}>
+                    <div className="absolute bottom-3 left-3 rounded-xl border border-brand/20 bg-white/80 p-3 shadow-xl backdrop-blur-md sm:-bottom-5 sm:-left-5 sm:p-4">
+                      <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-slate-500">
+                        Speed
+                      </p>
+                      <p className="mt-1 text-base font-bold text-slate-900 sm:text-lg">4.2x Faster</p>
+                    </div>
+                  </Parallax>
                 </div>
-              </div>
+              </Parallax>
             </Reveal>
           </div>
         </Container>
@@ -107,12 +127,19 @@ export default function Home() {
           <div className="grid gap-8 text-center sm:grid-cols-2 lg:grid-cols-4">
             {socialProofStats.map((stat, index) => (
               <Reveal key={stat.label} delay={index * 0.06}>
-                <div className="space-y-1">
-                  <p className="text-4xl font-bold tracking-tight text-slate-900">{stat.value}</p>
-                  <p className="text-xs font-medium uppercase tracking-[0.14em] text-slate-500">
-                    {stat.label}
-                  </p>
-                </div>
+                <Parallax
+                  speed={index % 2 === 0 ? 72 : -68}
+                  xSpeed={index % 2 === 0 ? 26 : -26}
+                  rotate={index % 2 === 0 ? 4 : -4}
+                  scale={0.05}
+                >
+                  <div className="space-y-1 rounded-2xl border border-slate-200 bg-white/70 px-4 py-5 backdrop-blur-sm">
+                    <p className="text-4xl font-bold tracking-tight text-slate-900">{stat.value}</p>
+                    <p className="text-xs font-medium uppercase tracking-[0.14em] text-slate-500">
+                      {stat.label}
+                    </p>
+                  </div>
+                </Parallax>
               </Reveal>
             ))}
           </div>
@@ -141,28 +168,35 @@ export default function Home() {
           <div className="mt-10 grid gap-5 md:mt-12 md:gap-6 md:grid-cols-2 lg:grid-cols-3">
             {featuredServices.map((service, index) => (
               <Reveal key={service.title} delay={index * 0.08}>
-                <article className="h-full rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_-45px_rgba(15,23,42,0.5)] transition hover:-translate-y-1 hover:shadow-[0_20px_60px_-35px_rgba(15,23,42,0.45)] md:p-8">
-                  <div className="inline-flex rounded-xl bg-brand/10 p-3 text-brand">
-                    <service.icon className="h-6 w-6" />
-                  </div>
-                  <h3 className="mt-5 text-xl font-bold text-slate-900 sm:text-2xl">{service.title}</h3>
-                  <p className="mt-4 text-sm leading-7 text-slate-600">{service.description}</p>
-                  <ul className="mt-5 space-y-2">
-                    {service.bullets.map((bullet) => (
-                      <li key={bullet} className="flex items-center gap-2 text-sm text-slate-700">
-                        <Check className="h-4 w-4 text-brand" />
-                        {bullet}
-                      </li>
-                    ))}
-                  </ul>
-                  <Link
-                    href={service.href}
-                    className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-slate-900"
-                  >
-                    Learn more
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </article>
+                <Parallax
+                  speed={index % 2 === 0 ? 88 : -84}
+                  xSpeed={index % 2 === 0 ? -34 : 34}
+                  rotate={index % 2 === 0 ? 5 : -5}
+                  scale={0.06}
+                >
+                  <article className="h-full rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_-45px_rgba(15,23,42,0.5)] transition hover:-translate-y-1 hover:shadow-[0_20px_60px_-35px_rgba(15,23,42,0.45)] md:p-8">
+                    <div className="inline-flex rounded-xl bg-brand/10 p-3 text-brand">
+                      <service.icon className="h-6 w-6" />
+                    </div>
+                    <h3 className="mt-5 text-xl font-bold text-slate-900 sm:text-2xl">{service.title}</h3>
+                    <p className="mt-4 text-sm leading-7 text-slate-600">{service.description}</p>
+                    <ul className="mt-5 space-y-2">
+                      {service.bullets.map((bullet) => (
+                        <li key={bullet} className="flex items-center gap-2 text-sm text-slate-700">
+                          <Check className="h-4 w-4 text-brand" />
+                          {bullet}
+                        </li>
+                      ))}
+                    </ul>
+                    <Link
+                      href={service.href}
+                      className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-slate-900"
+                    >
+                      Learn more
+                      <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </article>
+                </Parallax>
               </Reveal>
             ))}
           </div>
@@ -182,16 +216,23 @@ export default function Home() {
           <div className="mt-10 grid gap-5 md:mt-14 md:gap-6 md:grid-cols-2 lg:grid-cols-4">
             {processSteps.map((step, index) => (
               <Reveal key={step.title} delay={index * 0.07}>
-                <article className="relative rounded-2xl border border-slate-200 bg-[#f8fafc] p-6">
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
-                    Step {step.step}
-                  </p>
-                  <div className="mt-4 inline-flex rounded-full bg-white p-2 text-brand shadow-sm">
-                    <step.icon className="h-5 w-5" />
-                  </div>
-                  <h3 className="mt-4 text-xl font-bold text-slate-900">{step.title}</h3>
-                  <p className="mt-3 text-sm leading-7 text-slate-600">{step.description}</p>
-                </article>
+                <Parallax
+                  speed={index % 2 === 0 ? 64 : -60}
+                  xSpeed={index % 2 === 0 ? 20 : -20}
+                  rotate={index % 2 === 0 ? 3 : -3}
+                  scale={0.04}
+                >
+                  <article className="relative rounded-2xl border border-slate-200 bg-[#f8fafc] p-6">
+                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">
+                      Step {step.step}
+                    </p>
+                    <div className="mt-4 inline-flex rounded-full bg-white p-2 text-brand shadow-sm">
+                      <step.icon className="h-5 w-5" />
+                    </div>
+                    <h3 className="mt-4 text-xl font-bold text-slate-900">{step.title}</h3>
+                    <p className="mt-3 text-sm leading-7 text-slate-600">{step.description}</p>
+                  </article>
+                </Parallax>
               </Reveal>
             ))}
           </div>
@@ -210,24 +251,31 @@ export default function Home() {
           <div className="mt-10 grid gap-5 md:mt-12 md:gap-6 lg:grid-cols-2">
             {featuredProjects.map((project, index) => (
               <Reveal key={project.title} delay={index * 0.1}>
-                <article className="relative overflow-hidden rounded-2xl border border-slate-200 bg-[linear-gradient(145deg,#1e293b_0%,#0f172a_85%)] p-6 text-white md:p-8">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_95%_0%,rgba(49,130,237,0.45),transparent_55%)]" />
-                  <div className="relative">
-                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-300">
-                      {project.category}
-                    </p>
-                    <h3 className="mt-3 text-2xl font-bold sm:text-3xl">{project.title}</h3>
-                    <p className="mt-4 max-w-xl text-sm leading-7 text-slate-300">{project.summary}</p>
-                    <p className="mt-5 text-sm font-semibold text-blue-200">{project.outcome}</p>
-                    <Link
-                      href={project.href}
-                      className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-white"
-                    >
-                      View Case Study
-                      <ArrowRight className="h-4 w-4" />
-                    </Link>
-                  </div>
-                </article>
+                <Parallax
+                  speed={index % 2 === 0 ? 112 : -108}
+                  xSpeed={index % 2 === 0 ? 44 : -44}
+                  rotate={index % 2 === 0 ? 6 : -6}
+                  scale={0.07}
+                >
+                  <article className="relative overflow-hidden rounded-2xl border border-slate-200 bg-[linear-gradient(145deg,#1e293b_0%,#0f172a_85%)] p-6 text-white md:p-8">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_95%_0%,rgba(49,130,237,0.45),transparent_55%)]" />
+                    <div className="relative">
+                      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-300">
+                        {project.category}
+                      </p>
+                      <h3 className="mt-3 text-2xl font-bold sm:text-3xl">{project.title}</h3>
+                      <p className="mt-4 max-w-xl text-sm leading-7 text-slate-300">{project.summary}</p>
+                      <p className="mt-5 text-sm font-semibold text-blue-200">{project.outcome}</p>
+                      <Link
+                        href={project.href}
+                        className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-white"
+                      >
+                        View Case Study
+                        <ArrowRight className="h-4 w-4" />
+                      </Link>
+                    </div>
+                  </article>
+                </Parallax>
               </Reveal>
             ))}
           </div>
@@ -303,8 +351,12 @@ export default function Home() {
         <Container>
           <Reveal>
             <div className="relative overflow-hidden rounded-[1.5rem] bg-brand px-5 py-12 text-center text-white sm:rounded-[2rem] sm:px-8 sm:py-16 md:px-16">
-              <div className="absolute -left-16 -top-16 h-56 w-56 rounded-full bg-white/10 blur-2xl" />
-              <div className="absolute -bottom-20 -right-12 h-64 w-64 rounded-full bg-blue-300/20 blur-2xl" />
+              <Parallax speed={36} className="absolute -left-16 -top-16">
+                <div className="anim-float-medium h-56 w-56 rounded-full bg-white/10 blur-2xl" />
+              </Parallax>
+              <Parallax speed={-32} className="absolute -bottom-20 -right-12">
+                <div className="anim-float-slow anim-delay-2 h-64 w-64 rounded-full bg-blue-300/20 blur-2xl" />
+              </Parallax>
 
               <div className="relative">
                 <h2 className="text-balance text-3xl font-bold sm:text-4xl md:text-5xl">
