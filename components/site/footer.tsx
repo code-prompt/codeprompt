@@ -14,7 +14,7 @@ const serviceLinks = [
 
 export function Footer() {
   return (
-    <footer className="mt-24 bg-slate-950 py-16 text-slate-300">
+    <footer className="mt-16 bg-slate-950 py-12 text-slate-300 md:mt-24 md:py-16">
       <Container>
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div>
@@ -60,9 +60,9 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-4 border-t border-slate-800 pt-8 text-xs text-slate-500 md:flex-row md:items-center md:justify-between">
+        <div className="mt-10 flex flex-col gap-4 border-t border-slate-800 pt-8 text-xs text-slate-500 md:mt-12 md:flex-row md:items-center md:justify-between">
           <p>© 2026 Code Prompt Studio. All rights reserved.</p>
-          <div className="flex items-center gap-5">
+          <div className="flex flex-wrap items-center gap-5">
             <Link href="/" className="transition hover:text-slate-300">
               Privacy Policy
             </Link>

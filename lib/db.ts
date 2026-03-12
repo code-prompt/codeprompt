@@ -1,19 +1,64 @@
 import { randomUUID } from "node:crypto";
 
-import { Pool } from "pg";
-
-const connectionString = process.env.DATABASE_URL;
+import { Pool, type PoolConfig } from "pg";
 
 let pool: Pool | null = null;
+let poolConnectionString: string | null = null;
 let automationRunsTableEnsured = false;
 let blogPostsTableEnsured = false;
 let contactSubmissionsTableEnsured = false;
 
-export function getDbPool(): Pool | null {
-  if (!connectionString) return null;
-  if (!pool) {
-    pool = new Pool({ connectionString });
+function parseBooleanEnv(value: string | undefined): boolean | null {
+  if (!value) return null;
+  const normalized = value.trim().toLowerCase();
+  if (["1", "true", "yes", "on"].includes(normalized)) return true;
+  if (["0", "false", "no", "off"].includes(normalized)) return false;
+  return null;
+}
+
+function shouldUseSsl(connectionString: string): boolean {
+  const sslFromEnv = parseBooleanEnv(process.env.DATABASE_SSL);
+  if (sslFromEnv !== null) return sslFromEnv;
+
+  try {
+    const sslMode = new URL(connectionString).searchParams.get("sslmode")?.toLowerCase();
+    if (!sslMode) return false;
+    return !["disable", "allow", "prefer"].includes(sslMode);
+  } catch {
+    return false;
   }
+}
+
+function createPoolConfig(connectionString: string): PoolConfig {
+  const config: PoolConfig = { connectionString };
+
+  if (shouldUseSsl(connectionString)) {
+    config.ssl = {
+      rejectUnauthorized: false,
+    };
+  }
+
+  return config;
+}
+
+function getErrorMessage(error: unknown): string {
+  if (error instanceof Error) return error.message;
+  return "Unknown database error";
+}
+
+function logDbError(scope: string, error: unknown): void {
+  console.error(`[db:${scope}] ${getErrorMessage(error)}`);
+}
+
+export function getDbPool(): Pool | null {
+  const connectionString = process.env.DATABASE_URL?.trim();
+  if (!connectionString) return null;
+
+  if (!pool || poolConnectionString !== connectionString) {
+    pool = new Pool(createPoolConfig(connectionString));
+    poolConnectionString = connectionString;
+  }
+
   return pool;
 }
 
@@ -221,8 +266,9 @@ export async function getAllStoredBlogPosts(): Promise<StoredBlogPost[]> {
     `);
 
     return rows.map(mapStoredBlogPost);
-  } catch {
-    return [];
+  } catch (error) {
+    logDbError("getAllStoredBlogPosts", error);
+    throw error;
   }
 }
 
@@ -253,8 +299,9 @@ export async function getStoredBlogPostBySlug(slug: string): Promise<StoredBlogP
 
     const row = rows[0];
     return row ? mapStoredBlogPost(row) : null;
-  } catch {
-    return null;
+  } catch (error) {
+    logDbError("getStoredBlogPostBySlug", error);
+    throw error;
   }
 }
 
@@ -310,6 +357,7 @@ export async function createStoredBlogPost(input: {
   } catch (error) {
     const err = error as { code?: string };
     if (err.code === "23505") return "conflict";
+    logDbError("createStoredBlogPost", error);
     return "error";
   }
 }

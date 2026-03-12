@@ -10,8 +10,16 @@ function isAuthorized(request: NextRequest): boolean {
   const secret = process.env.CRON_SECRET;
   if (!secret) return true;
 
-  const authorization = request.headers.get("authorization") ?? "";
-  return authorization === `Bearer ${secret}`;
+  const authorization = (request.headers.get("authorization") ?? "").trim();
+  const xCronSecret = (request.headers.get("x-cron-secret") ?? "").trim();
+  const xApiKey = (request.headers.get("x-api-key") ?? "").trim();
+
+  return (
+    authorization === `Bearer ${secret}` ||
+    authorization === secret ||
+    xCronSecret === secret ||
+    xApiKey === secret
+  );
 }
 
 async function extractTopic(request: NextRequest): Promise<string | undefined> {
@@ -46,7 +54,10 @@ async function handleGenerate(request: NextRequest) {
     revalidatePath("/blog");
     revalidatePath(`/blog/${result.slug}`);
 
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://codeprompt.in";
+    const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? request.nextUrl.origin).replace(
+      /\/$/,
+      "",
+    );
 
     return NextResponse.json(
       {

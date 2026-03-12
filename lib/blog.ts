@@ -63,15 +63,21 @@ export async function getAllPosts(): Promise<BlogPostMeta[]> {
   const hasDatabase = Boolean(process.env.DATABASE_URL);
 
   if (hasDatabase) {
-    const dbPosts = await getAllStoredBlogPosts();
-    return dbPosts.map((post) => ({
-      slug: post.slug,
-      title: post.title,
-      date: post.published_at.slice(0, 10),
-      description: post.description,
-      tags: post.tags,
-      image: post.image ?? undefined,
-    }));
+    try {
+      const dbPosts = await getAllStoredBlogPosts();
+      if (dbPosts.length > 0) {
+        return dbPosts.map((post) => ({
+          slug: post.slug,
+          title: post.title,
+          date: post.published_at.slice(0, 10),
+          description: post.description,
+          tags: post.tags,
+          image: post.image ?? undefined,
+        }));
+      }
+    } catch {
+      // Fall back to local MDX files if database is temporarily unavailable.
+    }
   }
 
   return getAllPostsFromFs();
@@ -81,20 +87,24 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   const hasDatabase = Boolean(process.env.DATABASE_URL);
 
   if (hasDatabase) {
-    const post = await getStoredBlogPostBySlug(slug);
-    if (!post) return null;
-
-    return {
-      meta: {
-        slug: post.slug,
-        title: post.title,
-        date: post.published_at.slice(0, 10),
-        description: post.description,
-        tags: post.tags,
-        image: post.image ?? undefined,
-      },
-      content: post.content_markdown,
-    };
+    try {
+      const post = await getStoredBlogPostBySlug(slug);
+      if (post) {
+        return {
+          meta: {
+            slug: post.slug,
+            title: post.title,
+            date: post.published_at.slice(0, 10),
+            description: post.description,
+            tags: post.tags,
+            image: post.image ?? undefined,
+          },
+          content: post.content_markdown,
+        };
+      }
+    } catch {
+      // Fall back to local MDX files if database is temporarily unavailable.
+    }
   }
 
   return getPostBySlugFromFs(slug);

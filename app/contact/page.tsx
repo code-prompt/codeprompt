@@ -13,9 +13,9 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <main className="pb-16 pt-14 md:pt-20">
+    <main className="pb-14 pt-12 md:pb-16 md:pt-20">
       <Container>
-        <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-start">
+        <div className="grid gap-8 md:gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-start">
           <Reveal>
             <div>
               <SectionHeading
@@ -24,7 +24,7 @@ export default function ContactPage() {
                 description="Share your roadmap, constraints, and timeline. We will propose a practical execution plan tailored to your stage."
               />
 
-              <div className="mt-8 space-y-4 rounded-2xl border border-slate-200 bg-white p-6 text-sm text-slate-700">
+              <div className="mt-6 space-y-4 rounded-2xl border border-slate-200 bg-white p-5 text-sm text-slate-700 sm:mt-8 sm:p-6">
                 <p>
                   <span className="font-semibold text-slate-900">Email:</span> contact@codeprompt.in
                 </p>

@@ -20,9 +20,9 @@ export default function Home() {
 
   return (
     <main>
-      <section className="relative overflow-hidden pb-24 pt-16 md:pb-32 md:pt-24">
+      <section className="relative overflow-hidden pb-16 pt-12 md:pb-24 md:pt-20 lg:pb-32 lg:pt-24">
         <Container>
-          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
+          <div className="grid items-center gap-8 md:gap-10 lg:grid-cols-2 lg:gap-14">
             <Reveal>
               <div>
                 <div className="inline-flex items-center gap-2 rounded-full border border-brand/20 bg-brand/10 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.12em] text-brand">
@@ -30,27 +30,27 @@ export default function Home() {
                   Now scaling Web3 &amp; AI MVPs
                 </div>
 
-                <h1 className="mt-6 text-balance text-5xl font-bold leading-[1.03] tracking-tight text-slate-900 md:text-7xl">
+                <h1 className="mt-6 text-balance text-4xl font-bold leading-[1.03] tracking-tight text-slate-900 sm:text-5xl md:text-6xl lg:text-7xl">
                   Build Your Software <span className="text-brand">Faster</span> With Expert
                   Developers
                 </h1>
 
-                <p className="mt-7 max-w-xl text-pretty text-lg leading-8 text-slate-600">
+                <p className="mt-6 max-w-xl text-pretty text-base leading-7 text-slate-600 md:mt-7 md:text-lg md:leading-8">
                   We help startups launch MVPs, build scalable products, and provide dedicated
                   tech teams. From concept to code, we are your engineering partner.
                 </p>
 
-                <div className="mt-9 flex flex-wrap items-center gap-4">
+                <div className="mt-8 flex flex-wrap items-center gap-3 sm:gap-4 md:mt-9">
                   <Link
                     href="/contact"
-                    className="btn-base btn-primary gap-2 px-7 py-4 text-sm"
+                    className="btn-base btn-primary w-full justify-center gap-2 px-6 py-3 text-sm sm:w-auto sm:px-7 sm:py-4"
                   >
                     Start Your Project
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                   <Link
                     href="/projects"
-                    className="btn-base btn-secondary gap-2 px-7 py-4 text-sm"
+                    className="btn-base btn-secondary w-full justify-center gap-2 px-6 py-3 text-sm sm:w-auto sm:px-7 sm:py-4"
                   >
                     <CirclePlay className="h-4 w-4" />
                     View Portfolio
@@ -60,8 +60,8 @@ export default function Home() {
             </Reveal>
 
             <Reveal delay={0.12}>
-              <div className="relative rounded-2xl border border-white/20 bg-[linear-gradient(140deg,#101822_0%,#1e293b_100%)] p-5 shadow-[0_28px_90px_-45px_rgba(15,23,42,0.8)]">
-                <div className="rounded-xl border border-white/10 bg-white/5 p-3">
+              <div className="relative rounded-2xl border border-white/20 bg-[linear-gradient(140deg,#101822_0%,#1e293b_100%)] p-4 shadow-[0_28px_90px_-45px_rgba(15,23,42,0.8)] sm:p-5">
+                <div className="rounded-xl border border-white/10 bg-white/5 p-3 sm:p-4">
                   <div className="mb-4 flex items-center gap-2 border-b border-white/10 pb-3">
                     <span className="h-3 w-3 rounded-full bg-red-400/80" />
                     <span className="h-3 w-3 rounded-full bg-yellow-300/80" />
@@ -71,7 +71,7 @@ export default function Home() {
                     </span>
                   </div>
 
-                  <pre className="overflow-x-auto text-sm leading-7 text-slate-200">
+                  <pre className="overflow-x-auto text-xs leading-6 text-slate-200 sm:text-sm sm:leading-7">
                     <code>{`class ProductBuilder:
   def __init__(self, idea):
     self.stack = ["React", "FastAPI", "Postgres"]
@@ -90,11 +90,11 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="absolute -bottom-5 -left-5 rounded-xl border border-brand/20 bg-white/80 p-4 shadow-xl backdrop-blur-md">
+                <div className="absolute bottom-3 left-3 rounded-xl border border-brand/20 bg-white/80 p-3 shadow-xl backdrop-blur-md sm:-bottom-5 sm:-left-5 sm:p-4">
                   <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-slate-500">
                     Speed
                   </p>
-                  <p className="mt-1 text-lg font-bold text-slate-900">4.2x Faster</p>
+                  <p className="mt-1 text-base font-bold text-slate-900 sm:text-lg">4.2x Faster</p>
                 </div>
               </div>
             </Reveal>
@@ -119,7 +119,7 @@ export default function Home() {
         </Container>
       </section>
 
-      <section className="py-24">
+      <section className="py-16 md:py-20 lg:py-24">
         <Container>
           <div className="flex flex-wrap items-end justify-between gap-6">
             <Reveal>
@@ -138,14 +138,14 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 grid gap-5 md:mt-12 md:gap-6 md:grid-cols-2 lg:grid-cols-3">
             {featuredServices.map((service, index) => (
               <Reveal key={service.title} delay={index * 0.08}>
-                <article className="h-full rounded-2xl border border-slate-200 bg-white p-8 shadow-[0_20px_60px_-45px_rgba(15,23,42,0.5)] transition hover:-translate-y-1 hover:shadow-[0_20px_60px_-35px_rgba(15,23,42,0.45)]">
+                <article className="h-full rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_60px_-45px_rgba(15,23,42,0.5)] transition hover:-translate-y-1 hover:shadow-[0_20px_60px_-35px_rgba(15,23,42,0.45)] md:p-8">
                   <div className="inline-flex rounded-xl bg-brand/10 p-3 text-brand">
                     <service.icon className="h-6 w-6" />
                   </div>
-                  <h3 className="mt-6 text-2xl font-bold text-slate-900">{service.title}</h3>
+                  <h3 className="mt-5 text-xl font-bold text-slate-900 sm:text-2xl">{service.title}</h3>
                   <p className="mt-4 text-sm leading-7 text-slate-600">{service.description}</p>
                   <ul className="mt-5 space-y-2">
                     {service.bullets.map((bullet) => (
@@ -169,7 +169,7 @@ export default function Home() {
         </Container>
       </section>
 
-      <section className="bg-white py-24">
+      <section className="bg-white py-16 md:py-20 lg:py-24">
         <Container>
           <Reveal>
             <SectionHeading
@@ -179,7 +179,7 @@ export default function Home() {
             />
           </Reveal>
 
-          <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-10 grid gap-5 md:mt-14 md:gap-6 md:grid-cols-2 lg:grid-cols-4">
             {processSteps.map((step, index) => (
               <Reveal key={step.title} delay={index * 0.07}>
                 <article className="relative rounded-2xl border border-slate-200 bg-[#f8fafc] p-6">
@@ -198,7 +198,7 @@ export default function Home() {
         </Container>
       </section>
 
-      <section className="py-24">
+      <section className="py-16 md:py-20 lg:py-24">
         <Container>
           <Reveal>
             <SectionHeading
@@ -207,16 +207,16 @@ export default function Home() {
             />
           </Reveal>
 
-          <div className="mt-12 grid gap-6 lg:grid-cols-2">
+          <div className="mt-10 grid gap-5 md:mt-12 md:gap-6 lg:grid-cols-2">
             {featuredProjects.map((project, index) => (
               <Reveal key={project.title} delay={index * 0.1}>
-                <article className="relative overflow-hidden rounded-2xl border border-slate-200 bg-[linear-gradient(145deg,#1e293b_0%,#0f172a_85%)] p-8 text-white">
+                <article className="relative overflow-hidden rounded-2xl border border-slate-200 bg-[linear-gradient(145deg,#1e293b_0%,#0f172a_85%)] p-6 text-white md:p-8">
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_95%_0%,rgba(49,130,237,0.45),transparent_55%)]" />
                   <div className="relative">
                     <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-300">
                       {project.category}
                     </p>
-                    <h3 className="mt-3 text-3xl font-bold">{project.title}</h3>
+                    <h3 className="mt-3 text-2xl font-bold sm:text-3xl">{project.title}</h3>
                     <p className="mt-4 max-w-xl text-sm leading-7 text-slate-300">{project.summary}</p>
                     <p className="mt-5 text-sm font-semibold text-blue-200">{project.outcome}</p>
                     <Link
@@ -234,16 +234,13 @@ export default function Home() {
         </Container>
       </section>
 
-      <section className="bg-white py-24">
+      <section className="bg-white py-16 md:py-20 lg:py-24">
         <Container>
-          <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
+          <div className="grid gap-10 md:gap-12 lg:grid-cols-2 lg:items-center">
             <Reveal>
               <div className="grid gap-4 sm:grid-cols-2">
                 {advantages.map((advantage) => (
-                  <article
-                    key={advantage.title}
-                    className="rounded-2xl border border-slate-200 bg-[#f8fafc] p-6"
-                  >
+                  <article key={advantage.title} className="rounded-2xl border border-slate-200 bg-[#f8fafc] p-5 sm:p-6">
                     <div className="inline-flex rounded-full bg-brand/10 p-2 text-brand">
                       <advantage.icon className="h-5 w-5" />
                     </div>
@@ -291,7 +288,7 @@ export default function Home() {
         </Container>
       </section>
 
-      <section className="py-24">
+      <section className="py-16 md:py-20 lg:py-24">
         <Container className="max-w-4xl">
           <Reveal>
             <SectionHeading eyebrow="FAQ" title="Frequently asked questions" center />
@@ -302,32 +299,32 @@ export default function Home() {
         </Container>
       </section>
 
-      <section className="pb-10">
+      <section className="pb-8 md:pb-10">
         <Container>
           <Reveal>
-            <div className="relative overflow-hidden rounded-[2rem] bg-brand px-8 py-16 text-center text-white md:px-16">
+            <div className="relative overflow-hidden rounded-[1.5rem] bg-brand px-5 py-12 text-center text-white sm:rounded-[2rem] sm:px-8 sm:py-16 md:px-16">
               <div className="absolute -left-16 -top-16 h-56 w-56 rounded-full bg-white/10 blur-2xl" />
               <div className="absolute -bottom-20 -right-12 h-64 w-64 rounded-full bg-blue-300/20 blur-2xl" />
 
               <div className="relative">
-                <h2 className="text-balance text-4xl font-bold md:text-5xl">
+                <h2 className="text-balance text-3xl font-bold sm:text-4xl md:text-5xl">
                   Ready to turn your idea into reality?
                 </h2>
-                <p className="mx-auto mt-5 max-w-2xl text-pretty text-lg text-white/80">
+                <p className="mx-auto mt-5 max-w-2xl text-pretty text-base text-white/80 sm:text-lg">
                   Stop waiting for the perfect moment. Join 50+ successful founders who built
                   their future with Code Prompt.
                 </p>
 
-                <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+                <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:mt-10 sm:gap-4">
                   <Link
                     href="/contact"
-                    className="btn-base btn-inverse px-8 py-4 text-sm"
+                    className="btn-base btn-inverse w-full justify-center px-6 py-3 text-sm sm:w-auto sm:px-8 sm:py-4"
                   >
                     Book a Free Discovery Call
                   </Link>
                   <Link
                     href="/projects"
-                    className="btn-base btn-outline-light px-8 py-4 text-sm"
+                    className="btn-base btn-outline-light w-full justify-center px-6 py-3 text-sm sm:w-auto sm:px-8 sm:py-4"
                   >
                     View Case Studies
                   </Link>

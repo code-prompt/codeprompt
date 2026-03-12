@@ -34,9 +34,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   return (
-    <main className="pb-16 pt-14 md:pt-20">
+    <main className="pb-14 pt-12 md:pb-16 md:pt-20">
       <Container className="max-w-4xl">
-        <header className="rounded-2xl border border-slate-200 bg-white p-8">
+        <header className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 md:p-8">
           <div className="flex flex-wrap gap-2">
             {post.meta.tags.map((tag) => (
               <span
@@ -47,7 +47,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               </span>
             ))}
           </div>
-          <h1 className="mt-5 text-balance text-4xl font-bold tracking-tight text-slate-900 md:text-5xl">
+          <h1 className="mt-5 text-balance text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl md:text-5xl">
             {post.meta.title}
           </h1>
           <p className="mt-4 text-base leading-7 text-slate-600">{post.meta.description}</p>
@@ -60,7 +60,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </p>
         </header>
 
-        <article className="prose mt-10 rounded-2xl border border-slate-200 bg-white p-8 md:p-10">
+        <article className="prose mt-8 rounded-2xl border border-slate-200 bg-white p-5 sm:mt-10 sm:p-6 md:p-10">
           <MDXRemote source={post.content} />
         </article>
       </Container>

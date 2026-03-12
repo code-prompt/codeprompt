@@ -44,6 +44,7 @@ Copy `.env.example` to `.env` and set values:
 - `GEMINI_MODEL`
 - `BLOG_OUTPUT_PATH`
 - `DATABASE_URL`
+- `DATABASE_SSL`
 - `CRON_SECRET`
 - `TELEGRAM_BOT_TOKEN`
 - `TELEGRAM_CHAT_ID`
@@ -55,6 +56,7 @@ Copy `.env.example` to `.env` and set values:
 - If no MDX file exists in `content/blog`, `/blog` shows: `There is no published blogs.`
 - In local development without `DATABASE_URL`, new posts are written to `content/blog/*.mdx`.
 - In serverless production (for example Vercel), blogs are stored in PostgreSQL via `DATABASE_URL`.
+- For managed PostgreSQL providers that enforce TLS, set `DATABASE_SSL=true`.
 
 ## Automation endpoints
 

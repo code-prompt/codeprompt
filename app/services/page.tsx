@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function ServicesPage() {
   return (
-    <main className="pb-16 pt-14 md:pt-20">
+    <main className="pb-14 pt-12 md:pb-16 md:pt-20">
       <Container>
         <Reveal>
           <SectionHeading
@@ -25,17 +25,17 @@ export default function ServicesPage() {
           />
         </Reveal>
 
-        <div className="mt-12 grid gap-6 lg:grid-cols-2">
+        <div className="mt-10 grid gap-5 md:mt-12 md:gap-6 lg:grid-cols-2">
           {services.map((service, index) => (
             <Reveal key={service.title} delay={index * 0.05}>
               <article
                 id={service.href.replace("/services#", "")}
-                className="rounded-2xl border border-slate-200 bg-white p-8 shadow-[0_20px_50px_-38px_rgba(15,23,42,0.5)]"
+                className="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_20px_50px_-38px_rgba(15,23,42,0.5)] md:p-8"
               >
                 <div className="inline-flex rounded-xl bg-brand/10 p-3 text-brand">
                   <service.icon className="h-6 w-6" />
                 </div>
-                <h2 className="mt-5 text-2xl font-bold text-slate-900">{service.title}</h2>
+                <h2 className="mt-5 text-xl font-bold text-slate-900 sm:text-2xl">{service.title}</h2>
                 <p className="mt-3 text-sm leading-7 text-slate-600">{service.description}</p>
                 <ul className="mt-6 space-y-2">
                   {service.bullets.map((bullet) => (
@@ -51,7 +51,7 @@ export default function ServicesPage() {
         </div>
 
         <Reveal delay={0.2}>
-          <div className="mt-16 rounded-2xl bg-slate-900 px-8 py-10 text-white md:px-10">
+          <div className="mt-12 rounded-2xl bg-slate-900 px-5 py-8 text-white sm:mt-16 sm:px-8 sm:py-10 md:px-10">
             <h3 className="text-2xl font-bold">Need a custom engagement model?</h3>
             <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-300">
               We can combine team augmentation, fixed-scope sprints, and roadmap ownership based

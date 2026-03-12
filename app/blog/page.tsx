@@ -19,7 +19,7 @@ export default async function BlogPage() {
   const hasPosts = posts.length > 0;
 
   return (
-    <main className="pb-16 pt-14 md:pt-20">
+    <main className="pb-14 pt-12 md:pb-16 md:pt-20">
       <Container>
         <Reveal>
           <SectionHeading
@@ -30,10 +30,10 @@ export default async function BlogPage() {
         </Reveal>
 
         {hasPosts ? (
-          <div className="mt-12 grid gap-6 lg:grid-cols-2">
+          <div className="mt-10 grid gap-5 md:mt-12 md:gap-6 lg:grid-cols-2">
             {posts.map((post, index) => (
               <Reveal key={post.slug} delay={index * 0.07}>
-                <article className="h-full rounded-2xl border border-slate-200 bg-white p-7 shadow-[0_20px_50px_-40px_rgba(15,23,42,0.5)]">
+                <article className="h-full rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_20px_50px_-40px_rgba(15,23,42,0.5)] sm:p-6 md:p-7">
                   <div className="flex flex-wrap items-center gap-2">
                     {post.tags.map((tag) => (
                       <span
@@ -45,10 +45,10 @@ export default async function BlogPage() {
                     ))}
                   </div>
 
-                  <h2 className="mt-5 text-2xl font-bold text-slate-900">{post.title}</h2>
+                  <h2 className="mt-5 text-xl font-bold text-slate-900 sm:text-2xl">{post.title}</h2>
                   <p className="mt-3 text-sm leading-7 text-slate-600">{post.description}</p>
 
-                  <div className="mt-6 flex items-center justify-between text-sm text-slate-500">
+                  <div className="mt-6 flex flex-wrap items-center justify-between gap-3 text-sm text-slate-500">
                     <time dateTime={post.date}>
                       {new Date(post.date).toLocaleDateString("en-US", {
                         year: "numeric",
@@ -66,7 +66,7 @@ export default async function BlogPage() {
           </div>
         ) : (
           <Reveal delay={0.04}>
-            <div className="mt-12 rounded-2xl border border-slate-200 bg-white p-10 text-center shadow-[0_20px_50px_-40px_rgba(15,23,42,0.5)]">
+            <div className="mt-10 rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-[0_20px_50px_-40px_rgba(15,23,42,0.5)] sm:mt-12 sm:p-10">
               <p className="text-lg font-semibold text-slate-900">There is no published blogs.</p>
               <p className="mt-2 text-sm text-slate-600">
                 Blogs will appear here after they are published from the backend automation.

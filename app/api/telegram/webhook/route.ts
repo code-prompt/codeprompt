@@ -145,7 +145,10 @@ export async function POST(request: NextRequest) {
     revalidatePath("/blog");
     revalidatePath(`/blog/${result.slug}`);
 
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://codeprompt.in";
+    const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? request.nextUrl.origin).replace(
+      /\/$/,
+      "",
+    );
     const url = `${siteUrl}/blog/${result.slug}`;
 
     await sendTelegramMessage(

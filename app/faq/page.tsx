@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function FaqPage() {
   return (
-    <main className="pb-16 pt-14 md:pt-20">
+    <main className="pb-14 pt-12 md:pb-16 md:pt-20">
       <Container className="max-w-4xl">
         <Reveal>
           <SectionHeading
@@ -25,7 +25,7 @@ export default function FaqPage() {
           />
         </Reveal>
 
-        <div className="mt-12">
+        <div className="mt-10 md:mt-12">
           <FaqAccordion items={faqItems} />
         </div>
       </Container>

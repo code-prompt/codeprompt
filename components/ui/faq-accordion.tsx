@@ -24,10 +24,10 @@ export function FaqAccordion({ items }: FaqAccordionProps) {
             <button
               type="button"
               onClick={() => setOpenIndex(isOpen ? -1 : index)}
-              className="flex w-full items-center justify-between gap-6 px-6 py-5 text-left"
+              className="flex w-full items-center justify-between gap-4 px-4 py-4 text-left sm:gap-6 sm:px-6 sm:py-5"
               aria-expanded={isOpen}
             >
-              <span className="text-base font-semibold text-slate-900">{item.question}</span>
+              <span className="text-sm font-semibold text-slate-900 sm:text-base">{item.question}</span>
               <ChevronDown
                 className={`h-5 w-5 shrink-0 text-slate-500 transition-transform ${
                   isOpen ? "rotate-180" : "rotate-0"
@@ -35,7 +35,9 @@ export function FaqAccordion({ items }: FaqAccordionProps) {
               />
             </button>
             {isOpen ? (
-              <div className="px-6 pb-6 text-sm leading-7 text-slate-600">{item.answer}</div>
+              <div className="px-4 pb-5 text-sm leading-7 text-slate-600 sm:px-6 sm:pb-6">
+                {item.answer}
+              </div>
             ) : null}
           </div>
         );
