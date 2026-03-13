@@ -10,6 +10,7 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import {
   advantages,
   faqItems,
+  homepageKeywordCluster,
   processSteps,
   projects,
   services,
@@ -17,18 +18,54 @@ import {
 } from "@/lib/site-data";
 
 export const metadata: Metadata = {
+  title: "Software Development Company for Startups and Businesses",
+  description:
+    "CodePrompt is a software development company delivering custom software development services, AI development, SaaS platforms, and automation systems.",
+  keywords: [
+    homepageKeywordCluster.primary_keyword,
+    ...homepageKeywordCluster.secondary_keywords,
+    ...homepageKeywordCluster.long_tail_keywords,
+  ],
   alternates: { canonical: "/" },
   openGraph: {
+    title: "Software Development Company for Startups and Businesses",
+    description:
+      "Custom software development services, AI solutions, SaaS development, and startup MVP delivery by CodePrompt.",
     url: "/",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Software Development Company | CodePrompt",
+    description:
+      "Build custom software, AI tools, SaaS products, and automation systems with a startup-focused engineering team.",
   },
 };
 
 export default function Home() {
   const featuredServices = services.slice(0, 3);
   const featuredProjects = projects.slice(0, 2);
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqItems.slice(0, 3).map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  };
 
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(faqSchema).replace(/</g, "\\u003c"),
+        }}
+      />
       <section className="relative overflow-hidden pb-16 pt-12 md:pb-24 md:pt-20 lg:pb-32 lg:pt-24">
         <div className="pointer-events-none absolute inset-0">
           <div className="bg-mesh-motion" />
@@ -50,17 +87,18 @@ export default function Home() {
                 <div>
                   <div className="anim-float-slow inline-flex items-center gap-2 rounded-full border border-brand/20 bg-brand/10 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.12em] text-brand">
                     <span className="h-2 w-2 rounded-full bg-brand" />
-                    Now scaling Web3 &amp; AI MVPs
+                    Software, AI, SaaS, and Automation Delivery
                   </div>
 
                   <h1 className="mt-6 text-balance text-4xl font-bold leading-[1.03] tracking-tight text-slate-900 sm:text-5xl md:text-6xl lg:text-7xl">
-                    Build Your Software <span className="text-brand">Faster</span> With Expert
-                    Developers
+                    Software Development Company for{" "}
+                    <span className="text-brand">Startups and Businesses</span>
                   </h1>
 
                   <p className="mt-6 max-w-xl text-pretty text-base leading-7 text-slate-600 md:mt-7 md:text-lg md:leading-8">
-                    We help startups launch MVPs, build scalable products, and provide dedicated
-                    tech teams. From concept to code, we are your engineering partner.
+                    CodePrompt is a software development company that helps teams launch custom
+                    software, AI tools, SaaS products, and automation systems with predictable
+                    delivery and measurable business outcomes.
                   </p>
 
                   <div className="mt-8 flex flex-wrap items-center gap-3 sm:gap-4 md:mt-9">
@@ -247,6 +285,117 @@ export default function Home() {
         </Container>
       </section>
 
+      <section className="bg-[#f8fafc] py-16 md:py-20 lg:py-24">
+        <Container className="max-w-5xl">
+          <Reveal>
+            <article className="fx-card rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 md:p-10">
+              <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl md:text-4xl">
+                Custom software development services built around business outcomes
+              </h2>
+              <p className="mt-4 text-sm leading-7 text-slate-700 sm:text-base">
+                As a software development company, we focus on one core principle: software should
+                move your business forward, not just add another system to maintain. Our custom
+                software development services are structured around measurable outcomes such as
+                faster onboarding, lower operational cost, stronger customer retention, and higher
+                team productivity. Whether you are building a brand-new product or modernizing an
+                existing platform, we design architecture, delivery plans, and sprint scope around
+                the business goals that matter most.
+              </p>
+              <p className="mt-4 text-sm leading-7 text-slate-700 sm:text-base">
+                Teams work with CodePrompt when they need a software development company that can
+                combine strategy and execution: product direction, AI roadmap decisions, SaaS
+                scaling, integration planning, and launch support. If you want a practical path
+                from concept to production, start with our{" "}
+                <Link href="/services" className="font-semibold text-brand">
+                  software development services
+                </Link>{" "}
+                and we can map a delivery model tailored to your stage.
+              </p>
+
+              <div className="mt-8 grid gap-6 md:grid-cols-2">
+                <div>
+                  <h3 className="text-xl font-semibold text-slate-900">
+                    AI development company support for real workflows
+                  </h3>
+                  <p className="mt-3 text-sm leading-7 text-slate-700">
+                    We build AI features and AI agents that integrate into real operational
+                    workflows, including support, documentation, internal search, and analytics.
+                    Instead of demo-only AI, we focus on systems your team can trust in production.
+                    Learn how this works on our{" "}
+                    <Link href="/ai-development" className="font-semibold text-brand">
+                      AI development
+                    </Link>{" "}
+                    page.
+                  </p>
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-slate-900">
+                    SaaS development company expertise for product teams
+                  </h3>
+                  <p className="mt-3 text-sm leading-7 text-slate-700">
+                    SaaS products need multi-tenant foundations, billing workflows, and
+                    observability from day one. We design SaaS architectures that keep development
+                    velocity high while maintaining security and performance. Explore our{" "}
+                    <Link href="/saas-development" className="font-semibold text-brand">
+                      SaaS development approach
+                    </Link>{" "}
+                    for the implementation details.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-8">
+                <h3 className="text-xl font-semibold text-slate-900">
+                  Common use cases for startups and growth-stage businesses
+                </h3>
+                <ul className="mt-4 space-y-2 text-sm leading-7 text-slate-700 sm:text-base">
+                  <li className="flex items-start gap-3">
+                    <Check className="mt-1 h-4 w-4 shrink-0 text-brand" />
+                    Startup MVP development for founder-led teams preparing for launch, fundraising,
+                    or pilot customers.
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <Check className="mt-1 h-4 w-4 shrink-0 text-brand" />
+                    Custom business software development for operations, reporting, and internal
+                    automation systems.
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <Check className="mt-1 h-4 w-4 shrink-0 text-brand" />
+                    Web application development services for partner portals, client dashboards, and
+                    data-heavy B2B tools.
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <Check className="mt-1 h-4 w-4 shrink-0 text-brand" />
+                    API development services for integrations across CRMs, payment providers,
+                    analytics platforms, and internal tools.
+                  </li>
+                </ul>
+              </div>
+
+              <p className="mt-8 text-sm leading-7 text-slate-700 sm:text-base">
+                If you are comparing software development services, review our{" "}
+                <Link href="/projects" className="font-semibold text-brand">
+                  recent projects
+                </Link>{" "}
+                for delivery examples, read implementation guides on the{" "}
+                <Link href="/blog" className="font-semibold text-brand">
+                  engineering blog
+                </Link>
+                , and check detailed answers on{" "}
+                <Link href="/faq" className="font-semibold text-brand">
+                  frequently asked questions
+                </Link>
+                . When you are ready, our team can outline an execution plan through the{" "}
+                <Link href="/contact" className="font-semibold text-brand">
+                  contact page
+                </Link>
+                .
+              </p>
+            </article>
+          </Reveal>
+        </Container>
+      </section>
+
       <section className="py-16 md:py-20 lg:py-24">
         <Container>
           <Reveal>
@@ -337,7 +486,7 @@ export default function Home() {
                 href="/contact"
                 className="btn-base btn-dark mt-8 px-6 py-3 text-sm"
               >
-                Talk to an Expert
+                Talk to the Team
               </Link>
             </Reveal>
           </div>
@@ -372,7 +521,7 @@ export default function Home() {
                 </h2>
                 <p className="mx-auto mt-5 max-w-2xl text-pretty text-base text-white/80 sm:text-lg">
                   Stop waiting for the perfect moment. Join 50+ successful founders who built
-                  their future with Code Prompt.
+                  their future with CodePrompt, a software development company focused on delivery.
                 </p>
 
                 <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:mt-10 sm:gap-4">

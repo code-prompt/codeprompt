@@ -23,12 +23,13 @@ const siteUrl = getSiteUrl();
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Code Prompt | Software Development Services for Startups",
-    template: "%s | Code Prompt",
+    default: "Software Development Company for Startups | CodePrompt",
+    template: "%s | CodePrompt",
   },
   description:
-    "Code Prompt is a startup-focused software development studio helping founders launch MVPs, scale SaaS products, and hire senior engineers.",
+    "CodePrompt is a software development company delivering custom software development services, AI solutions, SaaS products, and automation systems.",
   keywords: seoKeywords,
+  alternates: { canonical: "/" },
   robots: {
     index: true,
     follow: true,
@@ -41,26 +42,26 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Code Prompt",
+    title: "Software Development Company | CodePrompt",
     description:
-      "Build your software faster with expert developers. MVP launch, SaaS engineering, and startup tech teams.",
+      "Custom software development services, AI development, SaaS platforms, and automation systems for startups and growing businesses.",
     type: "website",
-    siteName: "Code Prompt",
+    siteName: "CodePrompt",
     url: siteUrl,
     images: [
       {
         url: "/logo.png",
         width: 512,
         height: 512,
-        alt: "Code Prompt",
+        alt: "CodePrompt software development company logo",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Code Prompt",
+    title: "Software Development Company | CodePrompt",
     description:
-      "MVP development company and SaaS development agency for ambitious startups.",
+      "Software development company offering custom software development services, AI solutions, and SaaS development.",
     images: ["/logo.png"],
   },
   icons: {
@@ -89,9 +90,22 @@ export default function RootLayout({
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "Code Prompt",
+    name: "CodePrompt",
     url: siteUrl,
     logo: `${siteUrl}/logo.png`,
+    email: "contact@codeprompt.in",
+  };
+
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "CodePrompt",
+    url: siteUrl,
+    potentialAction: {
+      "@type": "SearchAction",
+      target: `${siteUrl}/blog?query={search_term_string}`,
+      "query-input": "required name=search_term_string",
+    },
   };
 
   return (
@@ -101,6 +115,12 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(organizationSchema).replace(/</g, "\\u003c"),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(websiteSchema).replace(/</g, "\\u003c"),
           }}
         />
         <Header />

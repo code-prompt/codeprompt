@@ -116,7 +116,7 @@ export async function generateBlogDraft(params: {
     : "No trending topics available, focus on the requested topic.";
 
   const prompt = `
-You are writing a production-ready blog post for Code Prompt, a startup-focused software development company.
+You are writing a production-ready blog post for CodePrompt, a startup-focused software development company.
 
 Primary topic: "${params.topic}"
 ${trendingLine}

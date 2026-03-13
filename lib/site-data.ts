@@ -53,12 +53,27 @@ export type FaqItem = {
   answer: string;
 };
 
+export type KeywordCluster = {
+  primary_keyword: string;
+  secondary_keywords: string[];
+  long_tail_keywords: string[];
+  lsi_keywords: string[];
+};
+
 export const navLinks = [
   { href: "/services", label: "Services" },
   { href: "/projects", label: "Projects" },
   { href: "/blog", label: "Blog" },
   { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
+];
+
+export const footerServiceLinks = [
+  { href: "/software-development", label: "Custom Software Development" },
+  { href: "/ai-development", label: "AI Development & AI Agents" },
+  { href: "/saas-development", label: "SaaS Development" },
+  { href: "/services#automation-systems", label: "Automation Systems" },
+  { href: "/services#startup-mvp-development", label: "Startup MVP Development" },
 ];
 
 export const socialProofStats: SiteStat[] = [
@@ -70,52 +85,60 @@ export const socialProofStats: SiteStat[] = [
 
 export const services: ServiceItem[] = [
   {
-    title: "MVP Launch",
+    title: "Custom Software Development",
     description:
-      "Validate your product idea in weeks, not months. We build feature-complete MVPs designed for growth.",
-    bullets: ["Rapid Prototyping", "Core Feature Focus"],
-    href: "/services#mvp-launch",
-    icon: Rocket,
+      "End-to-end custom software development services for startups, SMBs, and enterprise teams that need measurable business outcomes.",
+    bullets: ["Business Workflow Systems", "Scalable Product Architecture"],
+    href: "/services#custom-software-development",
+    icon: Cable,
   },
   {
-    title: "Startup Tech Team",
+    title: "AI Development & AI Agents",
     description:
-      "Scale with dedicated experts. Our senior developers integrate directly into your workflow.",
-    bullets: ["Embedded Engineering", "Scalable Architecture"],
-    href: "/services#startup-team",
-    icon: Users,
-  },
-  {
-    title: "Agency White-Label",
-    description:
-      "Reliable development partnership for design and marketing agencies. Your client, our code.",
-    bullets: ["Invisible Partnership", "High-Quality Delivery"],
-    href: "/services#white-label",
-    icon: Handshake,
+      "AI development company support for LLM features, AI agents, retrieval workflows, and practical automation.",
+    bullets: ["AI Agents & Copilots", "LLM Integration Pipelines"],
+    href: "/services#ai-development",
+    icon: Bot,
   },
   {
     title: "SaaS Development",
     description:
-      "From multi-tenant architecture to billing and analytics, we build secure SaaS platforms ready to scale.",
-    bullets: ["B2B Product Engineering", "Platform Security"],
+      "Secure SaaS development from product strategy to multi-tenant implementation, billing systems, and scaling.",
+    bullets: ["Multi-Tenant Platforms", "Subscription & Usage Billing"],
     href: "/services#saas-development",
     icon: ShieldCheck,
   },
   {
-    title: "AI Product Engineering",
+    title: "Automation Systems",
     description:
-      "Integrate practical AI into your workflows with LLM features, automation, and measurable business impact.",
-    bullets: ["LLM Integrations", "Workflow Automation"],
-    href: "/services#ai-product-engineering",
-    icon: Bot,
+      "Business automation systems that reduce repetitive manual work and improve speed, quality, and team visibility.",
+    bullets: ["Workflow Orchestration", "Ops & CRM Automation"],
+    href: "/services#automation-systems",
+    icon: Workflow,
   },
   {
-    title: "Web3 Development",
+    title: "Web & Mobile App Development",
     description:
-      "Launch secure on-chain products with wallet integrations, smart contracts, and clear user experiences.",
-    bullets: ["Smart Contract Builds", "Wallet + dApp UX"],
-    href: "/services#web3-development",
+      "Web application development services and mobile app builds with modern UX, API-first architecture, and high performance.",
+    bullets: ["Web Platforms & Dashboards", "iOS and Android Experiences"],
+    href: "/services#web-mobile-development",
     icon: Globe,
+  },
+  {
+    title: "Startup MVP Development",
+    description:
+      "Startup MVP development focused on validating product direction quickly without sacrificing long-term maintainability.",
+    bullets: ["Rapid MVP Launch", "Roadmap-Driven Iteration"],
+    href: "/services#startup-mvp-development",
+    icon: Rocket,
+  },
+  {
+    title: "API Development & Integrations",
+    description:
+      "Robust API development services for third-party integrations, internal systems, and cross-platform data sync.",
+    bullets: ["REST & Event APIs", "System Integration Layers"],
+    href: "/services#api-development",
+    icon: Handshake,
   },
 ];
 
@@ -124,28 +147,28 @@ export const processSteps: ProcessStep[] = [
     step: "01",
     title: "Discovery",
     description:
-      "We map goals, validate assumptions, and align product scope with your startup roadmap.",
+      "We define goals, user intent, and business constraints before writing production code.",
     icon: Compass,
   },
   {
     step: "02",
     title: "Planning",
     description:
-      "We define architecture, milestones, delivery cadence, and ownership from day one.",
+      "We map architecture, milestones, success metrics, and sprint rhythm aligned to your timeline.",
     icon: Workflow,
   },
   {
     step: "03",
     title: "Development",
     description:
-      "Our senior engineers build and iterate quickly with quality gates for stability and velocity.",
+      "Our senior engineers ship in short iterations with strong QA and performance checkpoints.",
     icon: Cable,
   },
   {
     step: "04",
-    title: "Launch",
+    title: "Launch & Scale",
     description:
-      "We ship to production, monitor outcomes, and support your next round of growth.",
+      "We deploy, monitor, and optimize so your software keeps improving as the business grows.",
     icon: Gauge,
   },
 ];
@@ -188,59 +211,113 @@ export const projects: ProjectItem[] = [
 export const advantages: AdvantageItem[] = [
   {
     title: "Senior-Only Talent",
-    description: "No junior developers learning on your project.",
+    description: "Senior software engineers and AI builders from day one.",
     icon: Sparkles,
   },
   {
-    title: "Startups First",
-    description:
-      "Every sprint balances speed, runway, and product-market fit.",
+    title: "Business-First Execution",
+    description: "Roadmaps tied to outcomes, not just output or velocity metrics.",
     icon: Briefcase,
   },
   {
     title: "Direct Communication",
-    description: "Talk directly to the engineers building your vision.",
+    description: "Founders and operators work directly with delivery teams every sprint.",
     icon: Users,
   },
   {
-    title: "Delivery Focus",
-    description: "Weekly demos, clear milestones, and measurable outcomes.",
+    title: "Reliable Delivery",
+    description: "Clear milestones, weekly demos, and transparent progress at every stage.",
     icon: Rocket,
   },
 ];
 
 export const faqItems: FaqItem[] = [
   {
-    question: "How long does an MVP take?",
+    question: "How long does startup MVP development take?",
     answer:
-      "Typically, we launch an initial MVP in 6 to 10 weeks depending on complexity. We focus on getting your core value proposition to market as fast as possible.",
+      "Most MVP builds take 6 to 12 weeks depending on scope, integrations, and design complexity. We prioritize the smallest valuable release and iterate quickly.",
   },
   {
-    question: "Do you work with in-house teams?",
+    question: "Do you provide custom software development services for existing businesses?",
     answer:
-      "Yes. We often embed with founders, product teams, and existing engineering teams to accelerate delivery without creating overhead.",
+      "Yes. We build custom software for startups, growing teams, and established businesses that need internal systems, customer platforms, or modernization.",
   },
   {
-    question: "What tech stack do you specialize in?",
+    question: "Can CodePrompt work as an AI development company partner for our product team?",
     answer:
-      "We ship modern web and SaaS products using React, Next.js, TypeScript, Node.js, Python, PostgreSQL, and cloud-native tooling.",
+      "Yes. We build AI agents, intelligent product features, and automation workflows that are validated with real business use cases before scaling.",
   },
   {
-    question: "Can you help after launch?",
+    question: "Do you support SaaS products after launch?",
     answer:
-      "Absolutely. We support post-launch optimization, performance tuning, feature delivery, and long-term roadmap execution.",
+      "Absolutely. We provide post-launch support, feature iteration, performance optimization, and scaling support for SaaS platforms.",
   },
   {
-    question: "Do you provide fixed-scope pricing?",
+    question: "Do you offer API development and third-party integrations?",
     answer:
-      "For clearly scoped projects, yes. We also offer monthly team extension plans for evolving products and fast iteration.",
+      "Yes. We design API layers and integration workflows for CRMs, payment systems, analytics stacks, and internal tools.",
   },
 ];
 
+export const homepageKeywordCluster: KeywordCluster = {
+  primary_keyword: "software development company",
+  secondary_keywords: [
+    "custom software development services",
+    "software development services",
+    "web application development services",
+    "mobile app development services",
+    "AI development company",
+    "SaaS development company",
+    "startup MVP development",
+    "API development services",
+    "business automation solutions",
+  ],
+  long_tail_keywords: [
+    "best software development company for startups",
+    "custom software development company for businesses",
+    "AI development company for startups",
+    "SaaS development company for founders",
+    "startup MVP development company in India",
+    "software development company for enterprise automation",
+  ],
+  lsi_keywords: [
+    "product engineering services",
+    "digital product development",
+    "full-stack development company",
+    "enterprise software solutions",
+    "agile software development",
+  ],
+};
+
+export const servicesKeywordCluster: KeywordCluster = {
+  primary_keyword: "custom software development services",
+  secondary_keywords: [
+    "software development company",
+    "custom software development company",
+    "AI development services",
+    "SaaS development services",
+    "automation systems development",
+    "API development company",
+    "startup MVP development services",
+  ],
+  long_tail_keywords: [
+    "custom software development services for startups",
+    "custom software development company for business automation",
+    "AI and SaaS development company for startups",
+    "API development and integration services for enterprises",
+    "startup MVP development services in India",
+  ],
+  lsi_keywords: [
+    "software engineering services",
+    "application development company",
+    "enterprise app development",
+    "product development partner",
+    "technology consulting and development",
+  ],
+};
+
 export const seoKeywords = [
-  "software development services",
-  "mvp development company",
-  "saas development agency",
-  "hire startup developers",
-  "build startup MVP",
+  homepageKeywordCluster.primary_keyword,
+  ...homepageKeywordCluster.secondary_keywords,
+  ...servicesKeywordCluster.secondary_keywords,
 ];

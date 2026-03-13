@@ -8,16 +8,28 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { getAllPosts } from "@/lib/blog";
 
 export const metadata: Metadata = {
-  title: "Blog",
+  title: "Software Development Blog",
   description:
-    "Insights on software development services, startup engineering, MVP delivery, and SaaS architecture.",
+    "Insights on software development services, AI development, startup MVP delivery, SaaS architecture, and automation systems.",
+  keywords: [
+    "software development blog",
+    "custom software development guides",
+    "AI development articles",
+    "SaaS development strategy",
+    "startup MVP development guide",
+  ],
   alternates: { canonical: "/blog" },
   openGraph: {
     url: "/blog",
     type: "website",
+    title: "Software Development Blog | CodePrompt",
+    description:
+      "Practical guides on software development services, AI product engineering, SaaS delivery, and startup execution.",
   },
   twitter: {
     card: "summary_large_image",
+    title: "Software Development Blog | CodePrompt",
+    description: "Articles on software development, AI, SaaS, and startup product strategy.",
   },
 };
 
@@ -26,15 +38,30 @@ export const dynamic = "force-dynamic";
 export default async function BlogPage() {
   const posts = await getAllPosts();
   const hasPosts = posts.length > 0;
+  const blogSchema = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    name: "CodePrompt Blog",
+    url: "https://codeprompt.in/blog",
+    description:
+      "Guides on custom software development services, AI development, SaaS architecture, and startup MVP strategy.",
+  };
 
   return (
     <main className="relative overflow-hidden pb-14 pt-12 md:pb-16 md:pt-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(blogSchema).replace(/</g, "\\u003c"),
+        }}
+      />
       <PageAtmosphere />
 
       <Container className="relative z-10">
         <Reveal>
           <SectionHeading
             eyebrow="Blog"
+            headingLevel="h1"
             title="Startup engineering insights"
             description="Guides and breakdowns on MVP launches, SaaS architecture, and product development strategy."
           />
@@ -78,9 +105,10 @@ export default async function BlogPage() {
         ) : (
           <Reveal delay={0.04}>
             <div className="fx-card mt-10 rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-[0_20px_50px_-40px_rgba(15,23,42,0.5)] sm:mt-12 sm:p-10">
-              <p className="text-lg font-semibold text-slate-900">There is no published blogs.</p>
+              <p className="text-lg font-semibold text-slate-900">No blog articles are published yet.</p>
               <p className="mt-2 text-sm text-slate-600">
-                Blogs will appear here after they are published from the backend automation.
+                Browse our <Link href="/services" className="font-semibold text-brand">services</Link> or{" "}
+                <Link href="/contact" className="font-semibold text-brand">contact us</Link> to discuss your product requirements.
               </p>
             </div>
           </Reveal>

@@ -15,7 +15,7 @@ import { ScrollProgress } from "../ui/scroll-progress";
 function BrandMark() {
   return (
     <div className="relative h-8 w-[128px] sm:h-9 sm:w-[150px]">
-      <Image src="/logo.png" alt="Code Prompt" fill className="object-contain object-left" priority />
+      <Image src="/logo.png" alt="CodePrompt" fill className="object-contain object-left" priority />
     </div>
   );
 }

@@ -1,16 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { navLinks } from "@/lib/site-data";
+import { footerServiceLinks, navLinks } from "@/lib/site-data";
 
 import { Container } from "../ui/container";
-
-const serviceLinks = [
-  "MVP Launch",
-  "Tech Team Augmentation",
-  "Web3 Development",
-  "AI & ML Solutions",
-];
 
 export function Footer() {
   return (
@@ -20,7 +13,7 @@ export function Footer() {
           <div>
             <div className="flex items-center gap-3">
               <div className="relative h-10 w-[160px]">
-                <Image src="/logo.png" alt="Code Prompt" fill className="object-contain object-left" />
+                <Image src="/logo.png" alt="CodePrompt" fill className="object-contain object-left" />
               </div>
             </div>
             <p className="mt-4 max-w-xs text-sm leading-7 text-slate-400">
@@ -32,8 +25,12 @@ export function Footer() {
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-white">Services</p>
             <ul className="mt-4 space-y-3 text-sm">
-              {serviceLinks.map((item) => (
-                <li key={item}>{item}</li>
+              {footerServiceLinks.map((item) => (
+                <li key={item.href}>
+                  <Link href={item.href} className="transition hover:text-white">
+                    {item.label}
+                  </Link>
+                </li>
               ))}
             </ul>
           </div>
@@ -61,7 +58,7 @@ export function Footer() {
         </div>
 
         <div className="mt-10 flex flex-col gap-4 border-t border-slate-800 pt-8 text-xs text-slate-500 md:mt-12 md:flex-row md:items-center md:justify-between">
-          <p>© 2026 Code Prompt Studio. All rights reserved.</p>
+          <p>© 2026 CodePrompt Studio. All rights reserved.</p>
           <div className="flex flex-wrap items-center gap-5">
             <Link href="/" className="transition hover:text-slate-300">
               Privacy Policy

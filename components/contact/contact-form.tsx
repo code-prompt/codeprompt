@@ -123,7 +123,7 @@ export function ContactForm() {
           <input
             id="company"
             className="mt-2 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm outline-none transition focus:border-brand"
-            placeholder="Code Prompt"
+            placeholder="CodePrompt"
             {...register("company")}
           />
         </div>

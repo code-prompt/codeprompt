@@ -8,28 +8,54 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { projects } from "@/lib/site-data";
 
 export const metadata: Metadata = {
-  title: "Projects",
+  title: "Software Development Projects",
   description:
-    "Featured startup projects from Code Prompt across fintech, social tech, SaaS, and healthtech domains.",
+    "Featured software development projects from CodePrompt across fintech, social tech, SaaS, and healthtech domains.",
+  keywords: [
+    "software development company portfolio",
+    "custom software development case studies",
+    "startup MVP project examples",
+    "SaaS development case studies",
+  ],
   alternates: { canonical: "/projects" },
   openGraph: {
     url: "/projects",
     type: "website",
+    title: "Software Development Projects | CodePrompt",
+    description:
+      "Explore product delivery case studies from a software development company working with startups and growth-stage teams.",
   },
   twitter: {
     card: "summary_large_image",
+    title: "Software Development Projects | CodePrompt",
+    description: "Case studies in SaaS, automation, web apps, and startup product delivery.",
   },
 };
 
 export default function ProjectsPage() {
+  const collectionSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "CodePrompt Projects",
+    url: "https://codeprompt.in/projects",
+    description: "Project case studies and software delivery outcomes from CodePrompt.",
+  };
+
   return (
     <main className="relative overflow-hidden pb-14 pt-12 md:pb-16 md:pt-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(collectionSchema).replace(/</g, "\\u003c"),
+        }}
+      />
       <PageAtmosphere />
 
       <Container className="relative z-10">
         <Reveal>
           <SectionHeading
             eyebrow="Projects"
+            headingLevel="h1"
             title="Recent products we designed, built, and launched"
             description="Real delivery outcomes for founder-led teams and startup operators."
           />

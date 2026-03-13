@@ -74,7 +74,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     keywords: post.meta.tags.join(", "),
     publisher: {
       "@type": "Organization",
-      name: "Code Prompt",
+      name: "CodePrompt",
       logo: {
         "@type": "ImageObject",
         url: toAbsoluteUrl("/logo.png"),
