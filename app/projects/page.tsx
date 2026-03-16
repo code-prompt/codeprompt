@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 import { Container } from "@/components/ui/container";
 import { PageAtmosphere } from "@/components/ui/page-atmosphere";
@@ -51,6 +51,25 @@ export default function ProjectsPage() {
     })),
   };
 
+  const accentPalette = [
+    {
+      gradient: "from-sky-400/20 via-transparent to-indigo-500/10",
+      border: "border-sky-100",
+    },
+    {
+      gradient: "from-violet-400/20 via-transparent to-pink-400/10",
+      border: "border-pink-100",
+    },
+    {
+      gradient: "from-emerald-400/15 via-transparent to-cyan-400/10",
+      border: "border-emerald-100",
+    },
+    {
+      gradient: "from-amber-400/20 via-transparent to-rose-400/10",
+      border: "border-amber-100",
+    },
+  ];
+
   return (
     <main className="relative overflow-hidden pb-14 pt-12 md:pb-16 md:pt-20">
       <script
@@ -71,68 +90,68 @@ export default function ProjectsPage() {
           />
         </Reveal>
 
-        <div className="mt-10 flex flex-col gap-6 md:mt-12 lg:gap-8">
-          {projects.map((project, index) => (
-            <Reveal key={project.slug} delay={index * 0.07}>
-              <article
-                id={project.slug}
-                className="fx-card relative overflow-hidden rounded-3xl border border-slate-800/60 bg-slate-950/80 p-6 text-white shadow-[0_25px_70px_rgba(2,6,23,0.55)] backdrop-blur sm:p-8"
-              >
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_95%_0%,rgba(45,212,191,0.18),transparent_55%)]" />
-                <div className="relative grid gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
-                  <div>
-                    <div className="flex flex-wrap items-center gap-3 text-xs font-semibold text-slate-100">
-                      <span className="rounded-full border border-white/30 px-3 py-1 uppercase tracking-[0.18em] text-[0.68rem] text-white/90">
-                        {project.location}
-                      </span>
-                      <span className="rounded-full border border-white/20 px-3 py-1 text-[0.7rem] text-slate-100">
-                        {project.users}
-                      </span>
-                    </div>
-                    <h2 className="mt-4 text-2xl font-bold sm:text-3xl">{project.title}</h2>
-                    <p className="mt-4 text-base leading-7 text-slate-200">{project.description}</p>
+        <div className="mt-10 space-y-10 md:mt-14">
+          {projects.map((project, index) => {
+            const accent = accentPalette[index % accentPalette.length];
 
-                    <ul className="mt-5 flex flex-wrap gap-2">
-                      {project.tags.map((tag) => (
-                        <li
-                          key={`${project.slug}-${tag}`}
-                          className="rounded-full border border-white/15 px-3 py-1 text-xs font-medium uppercase tracking-[0.16em] text-slate-200/90"
+            return (
+              <Reveal key={project.slug} delay={index * 0.05}>
+                <article
+                  id={project.slug}
+                  className={`relative overflow-hidden rounded-[36px] border bg-white shadow-[0_25px_90px_rgba(15,23,42,0.12)] ${accent.border}`}
+                >
+                  <div className={`pointer-events-none absolute inset-0 bg-gradient-to-r ${accent.gradient}`} />
+                  <div className="relative grid items-center gap-8 p-6 md:p-8 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] lg:gap-12">
+                    <div className="order-2 space-y-5 lg:order-1">
+                      <div className="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">
+                        <span className="rounded-full bg-slate-100 px-3 py-1 text-slate-800">{project.location}</span>
+                        <span className="rounded-full bg-slate-100 px-3 py-1 text-slate-800">{project.users}</span>
+                      </div>
+                      <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl md:text-4xl">{project.title}</h2>
+                      <p className="text-base leading-7 text-slate-600 md:text-lg">{project.description}</p>
+                      <ul className="flex flex-wrap gap-2">
+                        {project.tags.map((tag) => (
+                          <li
+                            key={`${project.slug}-${tag}`}
+                            className="rounded-full border border-slate-200 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-slate-600"
+                          >
+                            {tag}
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="flex flex-wrap items-center gap-4 text-sm font-semibold text-slate-900">
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-slate-900 shadow-[0_16px_45px_rgba(15,23,42,0.2)]"
                         >
-                          {tag}
-                        </li>
-                      ))}
-                    </ul>
+                          View Live Case Study
+                          <ArrowRight className="h-4 w-4" />
+                        </a>
+                        <span className="text-xs uppercase tracking-[0.24em] text-slate-400">{project.liveUrl}</span>
+                      </div>
+                    </div>
 
-                    <div className="mt-6 flex flex-wrap items-center gap-4">
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        aria-label={`Visit ${project.title}`}
-                        className="btn-base btn-primary inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold"
-                      >
-                        Visit Live Product
-                        <ArrowUpRight className="h-4 w-4" />
-                      </a>
-                      <p className="text-sm text-slate-400">{project.liveUrl}</p>
+                    <div className="order-1 lg:order-2">
+                      <div className="relative overflow-hidden rounded-[28px] border border-slate-200 bg-slate-900/60 shadow-[0_20px_60px_rgba(15,23,42,0.25)]">
+                        <Image
+                          src={project.image}
+                          alt={`${project.title} product preview`}
+                          width={1200}
+                          height={900}
+                          className="h-full w-full object-cover object-top"
+                          sizes="(min-width: 1280px) 600px, (min-width: 768px) 45vw, 90vw"
+                          priority={index < 2}
+                        />
+                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent" />
+                      </div>
                     </div>
                   </div>
-
-                  <div className="relative min-h-[220px] overflow-hidden rounded-2xl border border-white/10 bg-slate-900/60">
-                    <Image
-                      src={project.image}
-                      alt={`${project.title} product preview`}
-                      fill
-                      className="object-cover object-center"
-                      sizes="(min-width: 1280px) 420px, (min-width: 768px) 45vw, 100vw"
-                      priority={index < 2}
-                    />
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-slate-950/50 via-transparent to-transparent" />
-                  </div>
-                </div>
-              </article>
-            </Reveal>
-          ))}
+                </article>
+              </Reveal>
+            );
+          })}
         </div>
 
         <Reveal delay={0.2}>
