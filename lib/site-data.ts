@@ -1,4 +1,5 @@
 import type { LucideIcon } from "lucide-react";
+import type { StaticImageData } from "next/image";
 import {
   Bot,
   Briefcase,
@@ -13,6 +14,14 @@ import {
   Users,
   Workflow,
 } from "lucide-react";
+
+import bheemBharatImage from "@/assets/bheemBharat.png";
+import idiogImage from "@/assets/idiog.png";
+import inventoryManagementImage from "@/assets/inventory-managment.png";
+import natureVacationImage from "@/assets/naturevacation.png";
+import priceMitraImage from "@/assets/pricemitra.png";
+import spgPrintsImage from "@/assets/spgprints.png";
+import threadSeerImage from "@/assets/threadseer.png";
 
 export type SiteStat = {
   value: string;
@@ -35,11 +44,14 @@ export type ProcessStep = {
 };
 
 export type ProjectItem = {
-  category: string;
+  slug: string;
   title: string;
-  summary: string;
-  outcome: string;
-  href: string;
+  description: string;
+  location: string;
+  users: string;
+  tags: string[];
+  liveUrl: string;
+  image: StaticImageData;
 };
 
 export type AdvantageItem = {
@@ -175,36 +187,81 @@ export const processSteps: ProcessStep[] = [
 
 export const projects: ProjectItem[] = [
   {
-    category: "Fintech MVP",
-    title: "Nexu Finance Dashboard",
-    summary:
-      "Scalable wealth management platform built with React and Node.js for enterprise-grade data workflows.",
-    outcome: "Launched in 9 weeks, 35% faster advisor onboarding",
-    href: "/projects#nexu-finance-dashboard",
+    slug: "bheem-bharat",
+    title: "Bheem Bharat",
+    description:
+      "Community-driven social platform with matrimony, media, and organizational tools built for scale.",
+    location: "Assam, India",
+    users: "10,000+ users",
+    tags: ["Web App", "Community", "Scalable"],
+    liveUrl: "https://bheembharat.com/",
+    image: bheemBharatImage,
   },
   {
-    category: "Social Tech",
-    title: "VibeSphere Networking",
-    summary:
-      "High-performance social networking app scaling to 10k+ concurrent users across global regions.",
-    outcome: "Reached 120k monthly active users in first 6 months",
-    href: "/projects#vibesphere-networking",
+    slug: "spg-prints",
+    title: "SPG Prints",
+    description:
+      "Industrial printing & branding platform currently working with SBI, Adani, Tata, and other enterprise clients.",
+    location: "Odisha, India",
+    users: "40,000+ users",
+    tags: ["Industrial", "Enterprise", "Branding"],
+    liveUrl: "https://www.spgprints.in/",
+    image: spgPrintsImage,
   },
   {
-    category: "B2B SaaS",
-    title: "FlowOps Automation",
-    summary:
-      "Ops automation suite that unified fragmented internal tooling and reduced manual work by 52%.",
-    outcome: "Cut incident triage time from 2h to 35m",
-    href: "/projects#flowops-automation",
+    slug: "idiog-research",
+    title: "IDIOG Research",
+    description:
+      "Global sustainability and research platform for reports, publications, and policy insights.",
+    location: "Global",
+    users: "20,000+ users",
+    tags: ["Research", "Global", "Platform"],
+    liveUrl: "https://idiog.com",
+    image: idiogImage,
   },
   {
-    category: "Healthtech",
-    title: "PulseCare Portal",
-    summary:
-      "HIPAA-ready patient engagement product with secure messaging, scheduling, and analytics.",
-    outcome: "Improved appointment completion by 27%",
-    href: "/projects#pulsecare-portal",
+    slug: "price-mitra",
+    title: "PriceMitra",
+    description:
+      "SaaS price tracker with automated alerts for Amazon, Flipkart, and major brands.",
+    location: "India",
+    users: "5,000+ users",
+    tags: ["SaaS", "Automation", "E-commerce"],
+    liveUrl: "https://pricemitra.subhodeep.tech/",
+    image: priceMitraImage,
+  },
+  {
+    slug: "threadseer",
+    title: "ThreadSeer",
+    description:
+      "Fashion e-commerce platform with high-conversion UI and a smooth checkout flow.",
+    location: "India",
+    users: "3,000+ users",
+    tags: ["E-commerce", "UI/UX", "Brand"],
+    liveUrl: "https://www.threadseer.shop",
+    image: threadSeerImage,
+  },
+  {
+    slug: "inventory-management-system",
+    title: "Inventory Management System",
+    description:
+      "Custom inventory and billing system saving 3-4 hours daily for warehouse teams.",
+    location: "India",
+    users: "1,000+ users",
+    tags: ["Internal Tool", "Billing", "Automation"],
+    liveUrl: "https://inventory-managment-5kw95f05b.vercel.app/",
+    image: inventoryManagementImage,
+  },
+  {
+    slug: "nature-vacation",
+    title: "Nature Vacation",
+    description:
+      "SEO-optimized tourism platform designed for scalable booking and content growth.",
+    location: "India",
+    users: "Launching Soon",
+    tags: ["Tourism", "SEO", "Platform"],
+    liveUrl: "https://www.naturevacation.in",
+    image: natureVacationImage,
   },
 ];
 

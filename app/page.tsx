@@ -407,7 +407,7 @@ export default function Home() {
 
           <div className="mt-10 grid gap-5 md:mt-12 md:gap-6 lg:grid-cols-2">
             {featuredProjects.map((project, index) => (
-              <Reveal key={project.title} delay={index * 0.1}>
+              <Reveal key={project.slug} delay={index * 0.1}>
                 <Parallax
                   speed={index % 2 === 0 ? 112 : -108}
                   xSpeed={index % 2 === 0 ? 44 : -44}
@@ -417,19 +417,35 @@ export default function Home() {
                   <article className="relative overflow-hidden rounded-2xl border border-slate-200 bg-[linear-gradient(145deg,#1e293b_0%,#0f172a_85%)] p-6 text-white md:p-8">
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_95%_0%,rgba(49,130,237,0.45),transparent_55%)]" />
                     <div className="relative">
-                      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-300">
-                        {project.category}
-                      </p>
+                      <div className="flex flex-wrap items-center gap-3 text-xs font-semibold text-slate-200">
+                        <span className="rounded-full border border-white/30 px-3 py-1 uppercase tracking-[0.16em] text-white">
+                          {project.location}
+                        </span>
+                        <span className="rounded-full border border-white/20 px-3 py-1 text-[0.7rem] text-slate-200">
+                          {project.users}
+                        </span>
+                      </div>
                       <h3 className="mt-3 text-2xl font-bold sm:text-3xl">{project.title}</h3>
-                      <p className="mt-4 max-w-xl text-sm leading-7 text-slate-300">{project.summary}</p>
-                      <p className="mt-5 text-sm font-semibold text-blue-200">{project.outcome}</p>
-                      <Link
-                        href={project.href}
+                      <p className="mt-4 max-w-xl text-sm leading-7 text-slate-300">{project.description}</p>
+                      <ul className="mt-5 flex flex-wrap gap-2">
+                        {project.tags.map((tag) => (
+                          <li
+                            key={`${project.slug}-${tag}`}
+                            className="rounded-full border border-white/20 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-slate-200"
+                          >
+                            {tag}
+                          </li>
+                        ))}
+                      </ul>
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noreferrer"
                         className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-white"
                       >
-                        View Case Study
+                        Visit Live Product
                         <ArrowRight className="h-4 w-4" />
-                      </Link>
+                      </a>
                     </div>
                   </article>
                 </Parallax>
