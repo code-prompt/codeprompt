@@ -110,11 +110,7 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      {/* Added 'relative' to fix scroll offset warning and kept hydration suppression */}
-      <body 
-        className={`${headingFont.variable} ${bodyFont.variable} relative`} 
-        suppressHydrationWarning={true}
-      >
+      <body className={`${headingFont.variable} ${bodyFont.variable}`}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

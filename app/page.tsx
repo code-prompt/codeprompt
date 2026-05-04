@@ -7,8 +7,6 @@ import { FaqAccordion } from "@/components/ui/faq-accordion";
 import { Parallax } from "@/components/ui/parallax";
 import { Reveal } from "@/components/ui/reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
-import Pricing from "@/components/ui/pricing"; 
-
 import {
   advantages,
   faqItems,
@@ -68,8 +66,6 @@ export default function Home() {
           __html: JSON.stringify(faqSchema).replace(/</g, "\\u003c"),
         }}
       />
-      
-      {/* Hero Section */}
       <section className="relative overflow-hidden pb-16 pt-12 md:pb-24 md:pt-20 lg:pb-32 lg:pt-24">
         <div className="pointer-events-none absolute inset-0">
           <div className="bg-mesh-motion" />
@@ -172,7 +168,6 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* Social Proof */}
       <section className="border-y border-slate-200 bg-white/90 py-10">
         <Container>
           <div className="grid gap-8 text-center sm:grid-cols-2 lg:grid-cols-4">
@@ -197,7 +192,6 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* Services Section */}
       <section className="py-16 md:py-20 lg:py-24">
         <Container>
           <div className="flex flex-wrap items-end justify-between gap-6">
@@ -255,7 +249,6 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* Process Section */}
       <section className="bg-white py-16 md:py-20 lg:py-24">
         <Container>
           <Reveal>
@@ -292,7 +285,6 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* Outcome Section */}
       <section className="bg-[#f8fafc] py-16 md:py-20 lg:py-24">
         <Container className="max-w-5xl">
           <Reveal>
@@ -305,28 +297,105 @@ export default function Home() {
                 move your business forward, not just add another system to maintain. Our custom
                 software development services are structured around measurable outcomes such as
                 faster onboarding, lower operational cost, stronger customer retention, and higher
-                team productivity.
+                team productivity. Whether you are building a brand-new product or modernizing an
+                existing platform, we design architecture, delivery plans, and sprint scope around
+                the business goals that matter most.
               </p>
+              <p className="mt-4 text-sm leading-7 text-slate-700 sm:text-base">
+                Teams work with CodePrompt when they need a software development company that can
+                combine strategy and execution: product direction, AI roadmap decisions, SaaS
+                scaling, integration planning, and launch support. If you want a practical path
+                from concept to production, start with our{" "}
+                <Link href="/services" className="font-semibold text-brand">
+                  software development services
+                </Link>{" "}
+                and we can map a delivery model tailored to your stage.
+              </p>
+
               <div className="mt-8 grid gap-6 md:grid-cols-2">
                 <div>
-                  <h3 className="text-xl font-semibold text-slate-900">AI development</h3>
+                  <h3 className="text-xl font-semibold text-slate-900">
+                    AI development company support for real workflows
+                  </h3>
                   <p className="mt-3 text-sm leading-7 text-slate-700">
-                    We build AI features and AI agents that integrate into real operational workflows.
+                    We build AI features and AI agents that integrate into real operational
+                    workflows, including support, documentation, internal search, and analytics.
+                    Instead of demo-only AI, we focus on systems your team can trust in production.
+                    Learn how this works on our{" "}
+                    <Link href="/ai-development" className="font-semibold text-brand">
+                      AI development
+                    </Link>{" "}
+                    page.
                   </p>
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-slate-900">SaaS development</h3>
+                  <h3 className="text-xl font-semibold text-slate-900">
+                    SaaS development company expertise for product teams
+                  </h3>
                   <p className="mt-3 text-sm leading-7 text-slate-700">
-                    We design SaaS architectures that keep development velocity high while maintaining security.
+                    SaaS products need multi-tenant foundations, billing workflows, and
+                    observability from day one. We design SaaS architectures that keep development
+                    velocity high while maintaining security and performance. Explore our{" "}
+                    <Link href="/saas-development" className="font-semibold text-brand">
+                      SaaS development approach
+                    </Link>{" "}
+                    for the implementation details.
                   </p>
                 </div>
               </div>
+
+              <div className="mt-8">
+                <h3 className="text-xl font-semibold text-slate-900">
+                  Common use cases for startups and growth-stage businesses
+                </h3>
+                <ul className="mt-4 space-y-2 text-sm leading-7 text-slate-700 sm:text-base">
+                  <li className="flex items-start gap-3">
+                    <Check className="mt-1 h-4 w-4 shrink-0 text-brand" />
+                    Startup MVP development for founder-led teams preparing for launch, fundraising,
+                    or pilot customers.
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <Check className="mt-1 h-4 w-4 shrink-0 text-brand" />
+                    Custom business software development for operations, reporting, and internal
+                    automation systems.
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <Check className="mt-1 h-4 w-4 shrink-0 text-brand" />
+                    Web application development services for partner portals, client dashboards, and
+                    data-heavy B2B tools.
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <Check className="mt-1 h-4 w-4 shrink-0 text-brand" />
+                    API development services for integrations across CRMs, payment providers,
+                    analytics platforms, and internal tools.
+                  </li>
+                </ul>
+              </div>
+
+              <p className="mt-8 text-sm leading-7 text-slate-700 sm:text-base">
+                If you are comparing software development services, review our{" "}
+                <Link href="/projects" className="font-semibold text-brand">
+                  recent projects
+                </Link>{" "}
+                for delivery examples, read implementation guides on the{" "}
+                <Link href="/blog" className="font-semibold text-brand">
+                  engineering blog
+                </Link>
+                , and check detailed answers on{" "}
+                <Link href="/faq" className="font-semibold text-brand">
+                  frequently asked questions
+                </Link>
+                . When you are ready, our team can outline an execution plan through the{" "}
+                <Link href="/contact" className="font-semibold text-brand">
+                  contact page
+                </Link>
+                .
+              </p>
             </article>
           </Reveal>
         </Container>
       </section>
 
-      {/* Featured Projects */}
       <section className="py-16 md:py-20 lg:py-24">
         <Container>
           <Reveal>
@@ -352,11 +421,30 @@ export default function Home() {
                         <span className="rounded-full border border-white/30 px-3 py-1 uppercase tracking-[0.16em] text-white">
                           {project.location}
                         </span>
+                        <span className="rounded-full border border-white/20 px-3 py-1 text-[0.7rem] text-slate-200">
+                          {project.users}
+                        </span>
                       </div>
                       <h3 className="mt-3 text-2xl font-bold sm:text-3xl">{project.title}</h3>
                       <p className="mt-4 max-w-xl text-sm leading-7 text-slate-300">{project.description}</p>
-                      <a href={project.liveUrl} className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-white">
-                        Visit Live Product <ArrowRight className="h-4 w-4" />
+                      <ul className="mt-5 flex flex-wrap gap-2">
+                        {project.tags.map((tag) => (
+                          <li
+                            key={`${project.slug}-${tag}`}
+                            className="rounded-full border border-white/20 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-slate-200"
+                          >
+                            {tag}
+                          </li>
+                        ))}
+                      </ul>
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-white"
+                      >
+                        Visit Live Product
+                        <ArrowRight className="h-4 w-4" />
                       </a>
                     </div>
                   </article>
@@ -367,7 +455,6 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* Advantage Section */}
       <section className="bg-white py-16 md:py-20 lg:py-24">
         <Container>
           <div className="grid gap-10 md:gap-12 lg:grid-cols-2 lg:items-center">
@@ -389,9 +476,32 @@ export default function Home() {
               <SectionHeading
                 eyebrow="Our Advantage"
                 title="Engineering excellence is in our DNA"
-                description="We do not just write code. We solve business problems with senior engineers."
+                description="We do not just write code. We solve business problems with senior engineers who have built products for unicorns and high-growth startups."
               />
-              <Link href="/contact" className="btn-base btn-dark mt-8 px-6 py-3 text-sm">
+              <ul className="mt-8 space-y-4">
+                <li className="flex items-start gap-3 text-sm text-slate-700">
+                  <span className="mt-0.5 rounded-full bg-emerald-100 p-1 text-emerald-700">
+                    <Check className="h-4 w-4" />
+                  </span>
+                  Startup-focused delivery model
+                </li>
+                <li className="flex items-start gap-3 text-sm text-slate-700">
+                  <span className="mt-0.5 rounded-full bg-emerald-100 p-1 text-emerald-700">
+                    <Check className="h-4 w-4" />
+                  </span>
+                  Senior engineering team only
+                </li>
+                <li className="flex items-start gap-3 text-sm text-slate-700">
+                  <span className="mt-0.5 rounded-full bg-emerald-100 p-1 text-emerald-700">
+                    <Check className="h-4 w-4" />
+                  </span>
+                  Clear sprint rhythm with measurable outcomes
+                </li>
+              </ul>
+              <Link
+                href="/contact"
+                className="btn-base btn-dark mt-8 px-6 py-3 text-sm"
+              >
                 Talk to the Team
               </Link>
             </Reveal>
@@ -399,10 +509,6 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* NEW PRICING SECTION */}
-      <Pricing />
-
-      {/* FAQ Section */}
       <section className="py-16 md:py-20 lg:py-24">
         <Container className="max-w-4xl">
           <Reveal>
@@ -414,20 +520,44 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* CTA Section */}
       <section className="pb-8 md:pb-10">
         <Container>
           <Reveal>
             <div className="relative overflow-hidden rounded-[1.5rem] bg-brand px-5 py-12 text-center text-white sm:rounded-[2rem] sm:px-8 sm:py-16 md:px-16">
+              <Parallax speed={36} className="absolute -left-16 -top-16">
+                <div className="anim-float-medium h-56 w-56 rounded-full bg-white/10 blur-2xl" />
+              </Parallax>
+              <Parallax speed={-32} className="absolute -bottom-20 -right-12">
+                <div className="anim-float-slow anim-delay-2 h-64 w-64 rounded-full bg-blue-300/20 blur-2xl" />
+              </Parallax>
+
               <div className="relative">
                 <h2 className="text-balance text-3xl font-bold sm:text-4xl md:text-5xl">
                   Ready to turn your idea into reality?
                 </h2>
+                <p className="mx-auto mt-5 max-w-2xl text-pretty text-base text-white/80 sm:text-lg">
+                  Stop waiting for the perfect moment. Join 50+ successful founders who built
+                  their future with CodePrompt, a software development company focused on delivery.
+                </p>
+
                 <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:mt-10 sm:gap-4">
-                  <Link href="/contact" className="btn-base btn-inverse w-full justify-center px-6 py-3 text-sm sm:w-auto sm:px-8 sm:py-4">
+                  <Link
+                    href="/contact"
+                    className="btn-base btn-inverse w-full justify-center px-6 py-3 text-sm sm:w-auto sm:px-8 sm:py-4"
+                  >
                     Book a Free Discovery Call
                   </Link>
+                  <Link
+                    href="/projects"
+                    className="btn-base btn-outline-light w-full justify-center px-6 py-3 text-sm sm:w-auto sm:px-8 sm:py-4"
+                  >
+                    View Case Studies
+                  </Link>
                 </div>
+
+                <p className="mt-6 text-sm text-white/70">
+                  No strings attached. 30-minute expert consultation.
+                </p>
               </div>
             </div>
           </Reveal>
