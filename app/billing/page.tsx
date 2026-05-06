@@ -5,13 +5,14 @@ import { useSearchParams } from "next/navigation";
 import { CreditCard, QrCode, ShieldCheck, ChevronRight, Lock, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import NextImage from "next/image";
+import Script from "next/script";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
 
 const PLAN_DATA = {
-  starter: { name: "Starter Pack", price: "₹19,999", details: "MVP or small feature development" },
-  professional: { name: "Professional Pack", price: "₹29,999", details: "Complete MVP or SaaS application" },
-  business: { name: "Business Pack", price: "₹49,999", details: "Full product development" },
+  starter: { name: "Starter Pack", price: "₹19,999", details: "MVP or small feature development", amount: 19999 },
+  professional: { name: "Professional Pack", price: "₹29,999", details: "Complete MVP or SaaS application", amount: 29999 },
+  business: { name: "Business Pack", price: "₹49,999", details: "Full product development", amount: 49999 },
 };
 
 function BillingContent() {
@@ -19,6 +20,7 @@ function BillingContent() {
   const [method, setMethod] = useState("qr");
   const [orderId, setOrderId] = useState("");
   const [isGenerating, setIsGenerating] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const planKey = searchParams.get("plan") as keyof typeof PLAN_DATA;
   const currentPlan = PLAN_DATA[planKey] || PLAN_DATA.professional;
@@ -29,8 +31,55 @@ function BillingContent() {
     return () => clearTimeout(timer);
   }, []);
 
+  const handleRazorpayPayment = async () => {
+    setLoading(true);
+    
+    const options = {
+      key: "rzp_test_Sm9nTYJQHz4GpR", // Your verified test key
+      amount: currentPlan.amount * 100, // Amount in paise (1999900)
+      currency: "INR",
+      name: "Code Prompt",
+      description: `Subscription for ${currentPlan.name}`,
+      image: "/logo.png", 
+      order_id: "", // Leave empty for standard checkout in test mode
+      handler: function (response: any) {
+        alert(`Payment Successful! Payment ID: ${response.razorpay_payment_id}`);
+        // You can add router.push("/success") here later
+      },
+      modal: {
+        ondismiss: function() {
+          setLoading(false); // Re-enables button if user closes the popup
+        }
+      },
+      prefill: {
+        name: "Priyanka Chouhan",
+        email: "priyanka@example.com",
+      },
+      theme: {
+        color: "#0F172A", 
+      },
+    };
+
+    try {
+      const rzp = new (window as any).Razorpay(options);
+      
+      // Catches and alerts specific failure reasons
+      rzp.on('payment.failed', function (response: any){
+          alert("Payment Failed: " + response.error.description);
+          setLoading(false);
+      });
+
+      rzp.open();
+    } catch (error) {
+      console.error("Razorpay fail:", error);
+      setLoading(false);
+    }
+  };
+
   return (
     <main className="relative min-h-screen bg-[#fcfdfe] pb-24 pt-12 overflow-hidden">
+      <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
+
       <div className="pointer-events-none absolute inset-0 z-0">
         <div className="absolute -left-[10%] top-0 h-[500px] w-[500px] rounded-full bg-blue-50/50 blur-[120px]" />
         <div className="absolute -right-[5%] bottom-0 h-[400px] w-[400px] rounded-full bg-indigo-50/30 blur-[100px]" />
@@ -97,7 +146,7 @@ function BillingContent() {
                     <div className="relative mb-8 rounded-[2rem] bg-slate-50 p-8 ring-1 ring-slate-200/50">
                       <div className="relative flex h-52 w-52 items-center justify-center rounded-xl bg-white p-4 shadow-sm overflow-hidden">
                         <div className={`transition-all duration-1000 ${isGenerating ? 'opacity-0 scale-95 blur-sm' : 'opacity-100 scale-100 blur-0'}`}>
-                           <NextImage src="/favicon/qrpay.png" alt="Payment QR" width={180} height={180} className="object-contain" />
+                            <NextImage src="/favicon/qrpay.png" alt="Payment QR" width={180} height={180} className="object-contain" />
                         </div>
                         {isGenerating && (
                           <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-white/90">
@@ -109,7 +158,7 @@ function BillingContent() {
                           </div>
                         )}
                         <div className="absolute inset-0 z-30 pointer-events-none overflow-hidden">
-                           <div className="h-full w-full bg-gradient-to-b from-brand/20 to-transparent animate-reveal-scan" />
+                            <div className="h-full w-full bg-gradient-to-b from-brand/20 to-transparent animate-reveal-scan" />
                         </div>
                       </div>
                     </div>
@@ -123,8 +172,12 @@ function BillingContent() {
                     </div>
                     <h3 className="mb-2 text-xl font-bold text-slate-900">Secure Payment</h3>
                     <p className="mb-8 max-w-xs text-sm leading-relaxed text-slate-500">Redirecting to Razorpay gateway to complete payment of {currentPlan.price}.</p>
-                    <button className="group flex w-full max-w-sm items-center justify-center gap-2 rounded-2xl bg-slate-900 py-5 text-sm font-bold text-white transition-all hover:bg-slate-800 active:scale-95">
-                      Proceed to Gateway
+                    <button 
+                      onClick={handleRazorpayPayment}
+                      disabled={loading}
+                      className="group flex w-full max-w-sm items-center justify-center gap-2 rounded-2xl bg-slate-900 py-5 text-sm font-bold text-white transition-all hover:bg-slate-800 active:scale-95 disabled:opacity-50"
+                    >
+                      {loading ? "Opening Secure Gateway..." : "Proceed to Gateway"}
                       <ChevronRight size={18} className="transition-transform group-hover:translate-x-1" />
                     </button>
                   </div>
