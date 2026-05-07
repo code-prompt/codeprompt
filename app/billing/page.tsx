@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { savePaymentRecord } from "@/app/actions/payment";
+import { useState, useEffect, Suspense, useRef } from "react";
 import { useSearchParams } from "next/navigation";
-import { CreditCard, QrCode, ShieldCheck, ChevronRight, Lock, ArrowLeft } from "lucide-react";
+import { CreditCard, QrCode, ShieldCheck, ChevronRight, Lock, ArrowLeft, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import NextImage from "next/image";
 import Script from "next/script";
@@ -21,6 +22,13 @@ function BillingContent() {
   const [orderId, setOrderId] = useState("");
   const [isGenerating, setIsGenerating] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [paymentStatus, setPaymentStatus] = useState<"idle" | "success" | "error">("idle");
+
+  // User input states
+  const [customerName, setCustomerName] = useState("");
+  const [customerEmail, setCustomerEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const emailInputRef = useRef<HTMLInputElement>(null);
 
   const planKey = searchParams.get("plan") as keyof typeof PLAN_DATA;
   const currentPlan = PLAN_DATA[planKey] || PLAN_DATA.professional;
@@ -31,49 +39,65 @@ function BillingContent() {
     return () => clearTimeout(timer);
   }, []);
 
+  const validateEmail = (email: string) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
+
   const handleRazorpayPayment = async () => {
+    setEmailError(""); 
+
+    if (!customerName) {
+      alert("Please enter your name.");
+      return;
+    }
+
+    if (!validateEmail(customerEmail)) {
+      setEmailError("Invalid email. Please enter a valid email before proceeding.");
+      emailInputRef.current?.focus(); 
+      return;
+    }
+
     setLoading(true);
     
     const options = {
-      key: "rzp_test_Sm9nTYJQHz4GpR", // Your verified test key
-      amount: currentPlan.amount * 100, // Amount in paise (1999900)
+      key: "rzp_test_Sm9nTYJQHz4GpR", 
+      amount: currentPlan.amount * 100, 
       currency: "INR",
       name: "Code Prompt",
       description: `Subscription for ${currentPlan.name}`,
       image: "/logo.png", 
-      order_id: "", // Leave empty for standard checkout in test mode
-      handler: function (response: any) {
-        alert(`Payment Successful! Payment ID: ${response.razorpay_payment_id}`);
-        // You can add router.push("/success") here later
-      },
-      modal: {
-        ondismiss: function() {
-          setLoading(false); // Re-enables button if user closes the popup
+      handler: async function (response: any) {
+        const result = await savePaymentRecord({
+          name: customerName,
+          email: customerEmail,
+          amount: currentPlan.amount,
+          status: "success",
+          paymentId: response.razorpay_payment_id
+        });
+
+        if (result.success) {
+          setPaymentStatus("success");
+        } else {
+          setPaymentStatus("error");
+          alert("Payment success, but failed to save record. Please contact support.");
         }
+        setLoading(false);
+      },
+      modal: { 
+        ondismiss: function() { 
+          setLoading(false); 
+        } 
       },
       prefill: {
-        name: "Priyanka Chouhan",
-        email: "priyanka@example.com",
+        name: customerName,
+        email: customerEmail,
       },
-      theme: {
-        color: "#0F172A", 
-      },
+      theme: { color: "#0F172A" },
     };
 
-    try {
-      const rzp = new (window as any).Razorpay(options);
-      
-      // Catches and alerts specific failure reasons
-      rzp.on('payment.failed', function (response: any){
-          alert("Payment Failed: " + response.error.description);
-          setLoading(false);
-      });
-
-      rzp.open();
-    } catch (error) {
-      console.error("Razorpay fail:", error);
-      setLoading(false);
-    }
+    const rzp = new (window as any).Razorpay(options);
+    rzp.open();
   };
 
   return (
@@ -100,48 +124,110 @@ function BillingContent() {
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-7">
             <Reveal>
-              <h1 className="mb-2 text-4xl font-bold tracking-tight text-slate-900">Review & Pay</h1>
-              <p className="mb-12 text-slate-500">Securely finalize your {currentPlan.name} subscription.</p>
+              <h1 className="mb-2 text-4xl font-bold tracking-tight text-slate-900">
+                {paymentStatus === "success" ? "Order Complete" : "Review & Pay"}
+              </h1>
+              <p className="mb-12 text-slate-500">
+                {paymentStatus === "success" 
+                  ? "Your subscription is now active." 
+                  : `Securely finalize your ${currentPlan.name} subscription.`}
+              </p>
             </Reveal>
 
             <div className="space-y-10">
-              <section>
-                <h2 className="mb-6 text-sm font-bold uppercase tracking-widest text-slate-400">01. Payment Method</h2>
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <button 
-                    onClick={() => setMethod("qr")}
-                    className={`group relative flex items-center gap-4 rounded-3xl border-2 p-6 transition-all duration-300 ${
-                      method === "qr" ? "border-brand bg-white shadow-xl ring-1 ring-brand" : "border-slate-100 bg-white/50 hover:border-slate-200"
-                    }`}
-                  >
-                    <div className={`flex h-12 w-12 items-center justify-center rounded-2xl transition-all duration-300 ${method === "qr" ? "bg-brand text-white" : "bg-slate-100 text-slate-400"}`}>
-                      <QrCode size={22} />
+              {paymentStatus !== "success" && (
+                <section>
+                  <h2 className="mb-6 text-sm font-bold uppercase tracking-widest text-slate-400">01. Customer Details</h2>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <input 
+                      type="text" 
+                      placeholder="Enter Full Name"
+                      value={customerName}
+                      onChange={(e) => setCustomerName(e.target.value)}
+                      className="w-full rounded-3xl border-2 border-slate-100 bg-white/50 p-6 focus:border-brand focus:outline-none transition-all"
+                    />
+                    <div className="flex flex-col gap-2">
+                      <input 
+                        ref={emailInputRef}
+                        type="email" 
+                        placeholder="Enter Email Address"
+                        value={customerEmail}
+                        onChange={(e) => {
+                          setCustomerEmail(e.target.value);
+                          if(emailError) setEmailError(""); 
+                        }}
+                        className={`w-full rounded-3xl border-2 p-6 bg-white/50 focus:outline-none transition-all ${
+                          emailError ? "border-red-500 ring-1 ring-red-500" : "border-slate-100 focus:border-brand"
+                        }`}
+                      />
+                      {emailError && (
+                        <span className="pl-4 text-xs font-bold text-red-500 animate-pulse">
+                          {emailError}
+                        </span>
+                      )}
                     </div>
-                    <div className="text-left">
-                      <p className="font-bold text-slate-900">Instant QR</p>
-                      <p className="text-[11px] text-slate-400">Scan via any UPI App</p>
-                    </div>
-                  </button>
+                  </div>
+                </section>
+              )}
 
-                  <button 
-                    onClick={() => setMethod("razorpay")}
-                    className={`group relative flex items-center gap-4 rounded-3xl border-2 p-6 transition-all duration-300 ${
-                      method === "razorpay" ? "border-brand bg-white shadow-xl ring-1 ring-brand" : "border-slate-100 bg-white/50 hover:border-slate-200"
-                    }`}
-                  >
-                    <div className={`flex h-12 w-12 items-center justify-center rounded-2xl transition-all duration-300 ${method === "razorpay" ? "bg-brand text-white" : "bg-slate-100 text-slate-400"}`}>
-                      <CreditCard size={22} />
-                    </div>
-                    <div className="text-left">
-                      <p className="font-bold text-slate-900">Razorpay</p>
-                      <p className="text-[11px] text-slate-400">Cards, UPI, Netbanking</p>
-                    </div>
-                  </button>
-                </div>
-              </section>
+              {paymentStatus !== "success" && (
+                <section>
+                  <h2 className="mb-6 text-sm font-bold uppercase tracking-widest text-slate-400">02. Payment Method</h2>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <button 
+                      onClick={() => setMethod("qr")}
+                      className={`group relative flex items-center gap-4 rounded-3xl border-2 p-6 transition-all duration-300 ${
+                        method === "qr" ? "border-brand bg-white shadow-xl ring-1 ring-brand" : "border-slate-100 bg-white/50 hover:border-slate-200"
+                      }`}
+                    >
+                      <div className={`flex h-12 w-12 items-center justify-center rounded-2xl transition-all duration-300 ${method === "qr" ? "bg-brand text-white" : "bg-slate-100 text-slate-400"}`}>
+                        <QrCode size={22} />
+                      </div>
+                      <div className="text-left">
+                        <p className="font-bold text-slate-900">Instant QR</p>
+                        <p className="text-[11px] text-slate-400">Scan via any UPI App</p>
+                      </div>
+                    </button>
+
+                    <button 
+                      onClick={() => setMethod("razorpay")}
+                      className={`group relative flex items-center gap-4 rounded-3xl border-2 p-6 transition-all duration-300 ${
+                        method === "razorpay" ? "border-brand bg-white shadow-xl ring-1 ring-brand" : "border-slate-100 bg-white/50 hover:border-slate-200"
+                      }`}
+                    >
+                      <div className={`flex h-12 w-12 items-center justify-center rounded-2xl transition-all duration-300 ${method === "razorpay" ? "bg-brand text-white" : "bg-slate-100 text-slate-400"}`}>
+                        <CreditCard size={22} />
+                      </div>
+                      <div className="text-left">
+                        <p className="font-bold text-slate-900">Razorpay</p>
+                        <p className="text-[11px] text-slate-400">Cards, UPI, Netbanking</p>
+                      </div>
+                    </button>
+                  </div>
+                </section>
+              )}
 
               <section className="rounded-[2.5rem] bg-white p-10 shadow-2xl border border-slate-50">
-                {method === "qr" ? (
+                {paymentStatus === "success" ? (
+                  <Reveal>
+                    <div className="flex flex-col items-center text-center py-6">
+                      <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-green-50 text-green-500">
+                        <CheckCircle2 size={60} strokeWidth={1.5} className="animate-in zoom-in duration-500" />
+                      </div>
+                      <h3 className="mb-2 text-2xl font-bold text-slate-900">Payment Confirmed</h3>
+                      <p className="mb-8 max-w-sm text-slate-500">
+                        Success! We've received your payment. A confirmation receipt has been sent to 
+                        <span className="font-bold text-slate-900 block mt-1">{customerEmail}</span>
+                      </p>
+                      <Link 
+                        href="/" 
+                        className="flex items-center gap-2 rounded-2xl bg-slate-900 px-10 py-4 text-sm font-bold text-white transition-all hover:bg-slate-800"
+                      >
+                        Go to Dashboard <ChevronRight size={18} />
+                      </Link>
+                    </div>
+                  </Reveal>
+                ) : method === "qr" ? (
                   <div className="flex flex-col items-center text-center">
                     <div className="relative mb-8 rounded-[2rem] bg-slate-50 p-8 ring-1 ring-slate-200/50">
                       <div className="relative flex h-52 w-52 items-center justify-center rounded-xl bg-white p-4 shadow-sm overflow-hidden">
@@ -177,7 +263,7 @@ function BillingContent() {
                       disabled={loading}
                       className="group flex w-full max-w-sm items-center justify-center gap-2 rounded-2xl bg-slate-900 py-5 text-sm font-bold text-white transition-all hover:bg-slate-800 active:scale-95 disabled:opacity-50"
                     >
-                      {loading ? "Opening Secure Gateway..." : "Proceed to Gateway"}
+                      {loading ? "Opening Gateway..." : "Proceed to Gateway"}
                       <ChevronRight size={18} className="transition-transform group-hover:translate-x-1" />
                     </button>
                   </div>
@@ -206,16 +292,6 @@ function BillingContent() {
                     <p className="font-bold text-slate-900">{currentPlan.price}</p>
                   </div>
                   <div className="h-[1px] w-full bg-slate-100" />
-                  <div className="space-y-3">
-                    <div className="flex justify-between text-xs font-medium text-slate-500">
-                      <span>Service Status</span>
-                      <span className="text-brand font-bold text-[10px] uppercase">Active Session</span>
-                    </div>
-                    <div className="flex justify-between text-xs font-medium text-slate-500">
-                      <span>Taxes (GST)</span>
-                      <span className="text-slate-900 font-bold">Inclusive</span>
-                    </div>
-                  </div>
                   <div className="mt-8 rounded-3xl bg-slate-900 p-7 text-white shadow-xl relative overflow-hidden">
                     <div className="relative z-10">
                        <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">Amount Payable</p>
@@ -226,11 +302,6 @@ function BillingContent() {
                     </div>
                     <div className="absolute -right-4 -bottom-4 h-20 w-20 rounded-full bg-white/5 blur-2xl" />
                   </div>
-                </div>
-                <div className="mt-10 flex items-center justify-center gap-6">
-                  <NextImage src="/logo.png" alt="Logo" width={80} height={20} className="opacity-30 grayscale" />
-                  <div className="h-4 w-[1px] bg-slate-200" />
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Verified Invoice</p>
                 </div>
               </div>
             </div>
