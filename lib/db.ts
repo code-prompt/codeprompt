@@ -455,3 +455,78 @@ export async function getContactSubmissionsPaginated(params: {
     return { items: [], total: 0, page: safePage, pageSize: safePageSize, totalPages: 0 };
   }
 }
+
+export type PaymentRecord = {
+  id: number;
+  customer_name: string;
+  customer_email: string;
+  amount: number;
+  payment_status: string;
+  razorpay_payment_id: string | null;
+  created_at: string;
+};
+
+let paymentsTableEnsured = false;
+
+async function ensurePaymentsTable(): Promise<void> {
+  if (paymentsTableEnsured) return;
+
+  const db = getDbPool();
+  if (!db) return;
+
+  await db.query(`
+    CREATE TABLE IF NOT EXISTS payments (
+      id SERIAL PRIMARY KEY,
+      customer_name TEXT NOT NULL,
+      customer_email TEXT NOT NULL,
+      amount DECIMAL(10, 2) NOT NULL,
+      payment_status TEXT DEFAULT 'pending',
+      razorpay_payment_id TEXT,
+      created_at TIMESTAMPTZ DEFAULT NOW()
+    )
+  `);
+
+  paymentsTableEnsured = true;
+}
+
+export async function createPaymentRecord(input: {
+  name: string;
+  email: string;
+  amount: number;
+  status: string;
+  paymentId?: string;
+}): Promise<PaymentRecord | null> {
+  const db = getDbPool();
+  if (!db) return null;
+
+  try {
+    await ensurePaymentsTable();
+
+    const { rows } = await db.query<PaymentRecord>(
+      `
+      INSERT INTO payments (
+        customer_name, 
+        customer_email, 
+        amount, 
+        payment_status, 
+        razorpay_payment_id, 
+        created_at
+      )
+      VALUES ($1, $2, $3, $4, $5, NOW())
+      RETURNING id, customer_name, customer_email, amount, payment_status, razorpay_payment_id, created_at::text
+      `,
+      [
+        input.name,
+        input.email,
+        input.amount,
+        input.status,
+        input.paymentId ?? null,
+      ],
+    );
+
+    return rows[0] ?? null;
+  } catch (error) {
+    logDbError("createPaymentRecord", error);
+    return null;
+  }
+}
